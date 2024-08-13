@@ -1,0 +1,178 @@
+import { ArchiveProjects, FeaturedProjects } from "@/lib/types";
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+
+const recentTechnologies: string[] = [
+  "JavaScript (ES6+)",
+  "Next.js",
+  "React",
+  "Typescript",
+  "MySQL",
+  "MongoDB",
+  "Tailwindcss",
+  "Express JS",
+  "PostgreSQL",
+  "Docker",
+];
+
+const socialLinks = [
+  {
+    href: "https://github.com/raghuaanand",
+    icon: <FaGithub />,
+  },
+  {
+    href: "https://www.linkedin.com/in/raghuanand",
+    icon: <FaLinkedin />,
+  },
+  {
+    href: "mailto:raghuaanand@gmail.com",
+    icon: <MdEmail />,
+  },
+  {
+    href: "https://api.whatsapp.com/send/?phone=917762091121",
+    icon: <FaWhatsapp />,
+  },
+];
+
+const featuredProjects: FeaturedProjects = [
+  {
+    title: "Discord Clone",
+    description:
+      "Discord Clone, developed on Next.js 13 framework, closely mimics Discord's core features. Users can create channels, invite others, and exchange messages in channels and 1:1 conversations. Powered by Socket.io, it supports real-time audio/video calls. Private conversations with all channel members are facilitated through Livekit WebRTC.",
+    image: "/discord.webp",
+    github: "https://github.com/raghuaanand/Discord-Clone",
+  },
+  {
+    title: "Yoom",
+    description:
+      "Built with the latest Next.js and TypeScript, this project replicates Zoom, a widely used video conferencing tool. It enables users to securely log in, create meetings and access various meeting functionalities such as recording, screen sharing, and managing participants.",
+    image: "/yoom.webp",
+    github: "https://github.com/raghuaanand/Yoom",
+    live: "https://yoom-raghu.vercel.app/",
+  },
+  {
+    title: "Notion Clone",
+    description:
+      "Notion Clone is a comprehensive project developed on the Next.js 14 framework, emulating the functionality of Notion. Clerk Authentication ensures secure user access. Tailwind CSS and Shadcn/UI contribute to a responsive and visually appealing UI. Real-time updates are facilitated through Convex Real-time Database, ensuring dynamic content changes.",
+    image: "/notion.webp",
+    github: "https://github.com/raghuaanand/Notion-Clone",
+    live: "https://notes-raghu.vercel.app",
+  },
+  {
+    title: "Expense Tracker",
+    description:
+      "Expensify is a MERN Stack project enabling user to track and visualize their expenses seamlessly. Razorpay enables easy upgrades, Chart JS 2 enhances report interactivity, and Chakra UI ensures a responsive UI. Nodemailer-enabled password reset ensures security. The pro version introduces a leaderboard, and an efficient tracking.",
+    image: "/expensify.webp",
+    github: "https://github.com/raghuaanand/Expense-Tracker",
+    live: "https://expensify-raghu.netlify.app",
+  },
+  {
+    title: "Social Media Website",
+    description:
+      "TextBook is a social media website built using the MERN stack, featuring authentication using NextAuth, a PostgreSQL database managed by Prisma, and the PrimeReact library for UI. It enables users to share their thoughts with others, like, and comment on other users' posts.",
+    image: "/textbook.webp",
+    github: "https://github.com/raghuaanand/TextBook",
+    live: "https://textbook-raghu.vercel.app/",
+  },
+];
+
+const archievedProjects: ArchiveProjects = [
+  {
+    title: "Url Shortener",
+    description:
+      "MERN Stack URL Shortener with CRUD functionality, click tracking, and update/delete options.",
+    github: "https://github.com/raghuaanand/Url-Shortener",
+    live: "https://tiny-link.fly.dev",
+    stack: ["MongoDb", "Express.Js", "React.Js", "Node.Js"],
+  },
+  {
+    title: "Mail Dash",
+    description:
+      "A mailbox client application that allows users to send and receive emails in real-time.",
+    github: "https://github.com/raghuaanand/Mail-Dash",
+    live: "https://mail-dash-raghu.netlify.app",
+    stack: ["React.js", "TypeScript", "Firebase", "Zustand"],
+  },
+  {
+    title: "Chat App",
+    description:
+      "A real time chat application built using Cloud firestore database allowing users to chat in a group.",
+    github: "https://github.com/raghuaanand/firebase-chat-app",
+    live: "https://chat-raghu.netlify.app",
+    stack: ["React.js", "Chakra UI", "Firebase"],
+  },
+  {
+    title: "Alpha Stock",
+    description:
+      "An application where users can search for US stocks, add it to Portfolio and keep a track of its Price!",
+    live: "https://alpha-stock-raghu.netlify.app/",
+    github: "https://github.com/raghuaanand/Alpha-Stock",
+    stack: ["React.Js", "Firebase", "Material UI", "Charts.Js 2"],
+  },
+  {
+    title: "Quiz App",
+    description:
+      "A quiz application built using Next.js where users can play quizzes with different question categories.",
+    live: "https://quizy-raghu.vercel.app/",
+    github: "https://github.com/raghuaanand/Quiz-App",
+    stack: ["Next.Js", "Prime React", "Tailwindcss", "The Trivia API"],
+  },
+  {
+    title: "Text Utilities",
+    description:
+      "A text manipulation application with Google Translation API, enabling users to translate to any language.",
+    live: "https://text-util-raghu.netlify.app",
+    github: "https://github.com/raghuaanand/text-utilities",
+    stack: ["React.Js", "Material UI", "Google Translate API"],
+  },
+  {
+    title: "Tic tac toe",
+    description: "Tic tac toe game built using React.JS",
+    live: "https://tic-tac-toe-raghu.netlify.app/",
+    github: "https://github.com/raghuaanand/tic-tac-toe",
+    stack: ["React.JS"],
+  },
+  {
+    title: "Weather App",
+    description:
+      "A Weather app built using React.JS which uses Open weather Map API for fetching weather data.",
+    github: "https://github.com/raghuaanand/weather-app",
+    live: "https://weather-raghu.netlify.app",
+    stack: ["React.JS", "Material UI", "Open Weather Map API"],
+  },
+  {
+    title: "CATOG",
+    description:
+      "CATOG was my first project where I integrated an API. The APIs used were the Cat API and Dog API.",
+    github: "https://github.com/raghuaanand/CATOG",
+    live: "https://catog-by-raghu.netlify.app",
+    stack: ["React.JS", "Material UI"],
+  },
+  {
+    title: "Tesla Clone",
+    description:
+      "A clone of the tesla website's landing page which looks exactly similar as of 15th December 2022.",
+    live: "https://tesla-raghu.netlify.app",
+    github: "https://github.com/raghuaanand/Tesla-Landing-Page-Clone",
+    stack: ["Html", "Bootstrap", "Javascript"],
+  },
+  {
+    title: "iNotes",
+    description:
+      "iNotes is an application where users can write notes, and it can perform CRUD operations in local storage.",
+    github: "https://github.com/raghuaanand/notes-web-app",
+    live: "https://inotes-raghu.netlify.app",
+    stack: ["Html", "Bootstrap", "Javascript"],
+  },
+  {
+    title: "Battery Percentage Checker",
+    description:
+      "My First Web Development project which shows the percentage of battery of any device.",
+    github: "https://github.com/raghuaanand/Battery-Percentage-Checker",
+    live: "https://battery-check-raghu.netlify.app",
+    stack: ["Html", "Bootstrap", "Javascript"],
+  },
+];
+
+export { archievedProjects, featuredProjects, recentTechnologies, socialLinks };
+
