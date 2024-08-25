@@ -35,45 +35,53 @@ const socialLinks = [
 ];
 
 const featuredProjects: FeaturedProjects = [
-  {
+  /* {
     title: "Discord Clone",
     description:
       "Discord Clone, developed on Next.js 13 framework, closely mimics Discord's core features. Users can create channels, invite others, and exchange messages in channels and 1:1 conversations. Powered by Socket.io, it supports real-time audio/video calls. Private conversations with all channel members are facilitated through Livekit WebRTC.",
     image: "/discord.webp",
     github: "https://github.com/raghuaanand/Discord-Clone",
-  },
+  }, */
   {
-    title: "Yoom",
+    title: "VirtuMeet",
     description:
       "Built with the latest Next.js and TypeScript, this project replicates Zoom, a widely used video conferencing tool. It enables users to securely log in, create meetings and access various meeting functionalities such as recording, screen sharing, and managing participants.",
     image: "/yoom.webp",
-    github: "https://github.com/raghuaanand/Yoom",
-    live: "https://yoom-raghu.vercel.app/",
+    github: "https://github.com/raghuaanand/VirtuMeet",
+    live: "https://virtumeet.raghuanand.tech",
   },
   {
+    title: "Smart Scholar",
+    description:
+      "It is an innovative online platform designed to empower students with cutting-edge AI tools that simplify their academic journey. Whether it's summarizing complex texts, receiving personalized career path advice, or breaking down challenging topics in a way that’s easy to understand.",
+    image: "/smart-scholar.png",
+    github: "https://github.com/raghuaanand/VirtuMeet",
+    live: "https://virtumeet.raghuanand.tech",
+  },
+ /*  {
     title: "Notion Clone",
     description:
       "Notion Clone is a comprehensive project developed on the Next.js 14 framework, emulating the functionality of Notion. Clerk Authentication ensures secure user access. Tailwind CSS and Shadcn/UI contribute to a responsive and visually appealing UI. Real-time updates are facilitated through Convex Real-time Database, ensuring dynamic content changes.",
     image: "/notion.webp",
     github: "https://github.com/raghuaanand/Notion-Clone",
     live: "https://notes-raghu.vercel.app",
-  },
-  {
+  }, */
+  /* {
     title: "Expense Tracker",
     description:
       "Expensify is a MERN Stack project enabling user to track and visualize their expenses seamlessly. Razorpay enables easy upgrades, Chart JS 2 enhances report interactivity, and Chakra UI ensures a responsive UI. Nodemailer-enabled password reset ensures security. The pro version introduces a leaderboard, and an efficient tracking.",
     image: "/expensify.webp",
     github: "https://github.com/raghuaanand/Expense-Tracker",
     live: "https://expensify-raghu.netlify.app",
-  },
-  {
+  }, */
+ /*  {
     title: "Social Media Website",
     description:
       "TextBook is a social media website built using the MERN stack, featuring authentication using NextAuth, a PostgreSQL database managed by Prisma, and the PrimeReact library for UI. It enables users to share their thoughts with others, like, and comment on other users' posts.",
     image: "/textbook.webp",
     github: "https://github.com/raghuaanand/TextBook",
     live: "https://textbook-raghu.vercel.app/",
-  },
+  }, */
 ];
 
 const archievedProjects: ArchiveProjects = [
