@@ -11,8 +11,10 @@ const recentTechnologies: string[] = [
   "MongoDB",
   "Tailwindcss",
   "Express JS",
+  "Node.js",
   "PostgreSQL",
   "Docker",
+  "CI/CD"
 ];
 
 const socialLinks = [

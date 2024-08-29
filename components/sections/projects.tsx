@@ -12,7 +12,7 @@ const Projects = () => {
           <FeaturedCard project={project} key={i} showReversed={i % 2 !== 0} />
         ))}
       </div>
-      <Archieve />
+      {/* <Archieve /> */}
     </section>
   );
 };
