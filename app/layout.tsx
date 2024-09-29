@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="w-full min-h-screen font-bodyFont bg-bodyColor text-textLight overflow-x-hidden overflow-y-auto">
+      <body className="w-full min-h-screen font-bodyFont bg-black text-textLight overflow-x-hidden overflow-y-auto">
         <Navbar />
         <LeftSide />
         <main className="max-w-6xl mx-auto mdl:px-10 xl:px-20 px-4">

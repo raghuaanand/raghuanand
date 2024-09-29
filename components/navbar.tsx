@@ -34,7 +34,7 @@ const Navbar = () => {
   return (
     <nav
       className={cn(
-        "w-full  sticky top-0 z-20 bg-bodyColor px-5 lg:px-8",
+        "w-full  sticky top-0 z-20 bg-black px-5 lg:px-8",
         scrolled && "shadow-navbarBoxShadow"
       )}
     >
