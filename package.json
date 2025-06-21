@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "type-check": "tsc --noEmit",
+    "build:analyze": "cross-env ANALYZE=true next build",
+    "export": "next export",
+    "clean": "rm -rf .next out",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.19",

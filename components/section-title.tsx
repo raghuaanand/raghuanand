@@ -5,13 +5,17 @@ interface Props {
 
 const SectionTitle = ({ title, titleNo }: Props) => {
   return (
-    <h2 className="font-titleFont text-2xl font-semibold flex items-center justify-center md:justify-start">
-      <span className="text-base md:text-lg text-textGreen mr-2">
-        {titleNo}.
-      </span>
-      {title}
-      <span className="hidden md:inline-flex md:w-60 lgl:w-72 h-[.5px] bg-gray-700 ml-6"></span>
-    </h2>
+    <div className="flex items-center justify-center md:justify-start mb-12">
+      <h2 className="font-serif text-3xl lg:text-4xl font-bold text-primary flex items-center">
+        <span className="text-lg font-sans font-medium text-accent mr-4 bg-accent/10 px-3 py-1 rounded-full">
+          {titleNo}
+        </span>
+        {title}
+      </h2>
+      <div className="hidden md:flex flex-1 ml-8">
+        <div className="h-px bg-border flex-1"></div>
+      </div>
+    </div>
   );
 };
 

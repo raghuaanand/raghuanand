@@ -6,6 +6,7 @@ import { Fragment } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { motion } from "framer-motion";
 import { socialLinks } from "@/constants";
+import IconRenderer from "@/components/icon-renderer";
 
 type Props = {
   isOpen: boolean;
@@ -40,97 +41,123 @@ const Drawer = ({ isOpen, onClose, handleScroll }: Props) => {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="pointer-events-auto w-[75vw]">
-                  <div className="flex h-full flex-col overflow-y-auto bg-secondaryColor py-6 rounded-xl">
+                <Dialog.Panel className="pointer-events-auto w-[75vw] max-w-sm">
+                  <div className="flex h-full flex-col overflow-y-auto bg-surface py-6 shadow-xl border-l border-border">
                     <div className="px-4 sm:px-6">
-                      <div className="flex items-start justify-end">
+                      <div className="flex items-start justify-between">
+                        <h2 className="text-lg font-serif font-semibold text-primary">Menu</h2>
                         <div className="ml-3 flex h-7 items-center">
-                          <MdOutlineClose
+                          <button
                             onClick={onClose}
-                            className="text-3xl text-textGreen cursor-pointer transition duration-300 hover:text-red-500 absolute top-4 right-4"
-                          />
+                            className="text-2xl text-text-secondary hover:text-accent transition-colors p-1"
+                            aria-label="Close menu"
+                          >
+                            <MdOutlineClose />
+                          </button>
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-col items-center gap-7 mt-6 ">
-                      <ul className="flex flex-col text-base gap-7">
-                        <Link
-                          className="nav-link"
-                          href="#about"
-                          onClick={handleScroll}
-                        >
+                    
+                    <div className="flex flex-col items-center gap-8 mt-8 px-6">
+                      <ul className="flex flex-col text-base gap-6 w-full">
+                        <Link className="nav-link" href="#about" onClick={handleScroll}>
                           <motion.li
                             initial={{ x: 20, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
-                            transition={{
-                              duration: 0.2,
-                              delay: 0.2,
-                              ease: "easeIn",
-                            }}
+                            transition={{ duration: 0.2, delay: 0.1 }}
+                            className="border-b border-border pb-3"
                           >
-                            <span className="drawer-span">01. </span> About
+                            <span className="text-accent font-mono text-sm">01.</span>
+                            <span className="ml-3 text-text-primary">About</span>
                           </motion.li>
                         </Link>
-                        <Link
-                          className="nav-link"
-                          href="#projects"
-                          onClick={handleScroll}
-                        >
+                        
+                        <Link className="nav-link" href="#skills" onClick={handleScroll}>
                           <motion.li
                             initial={{ x: 20, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
-                            transition={{
-                              duration: 0.2,
-                              delay: 0.4,
-                              ease: "easeIn",
-                            }}
+                            transition={{ duration: 0.2, delay: 0.2 }}
+                            className="border-b border-border pb-3"
                           >
-                            <span className="drawer-span">02.</span>
-                            Projects
+                            <span className="text-accent font-mono text-sm">02.</span>
+                            <span className="ml-3 text-text-primary">Skills</span>
                           </motion.li>
                         </Link>
-                        <Link
-                          className="nav-link"
-                          href="#contact"
-                          onClick={handleScroll}
-                        >
+                        
+                        <Link className="nav-link" href="#experience" onClick={handleScroll}>
                           <motion.li
                             initial={{ x: 20, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
-                            transition={{
-                              duration: 0.2,
-                              delay: 0.5,
-                              ease: "easeIn",
-                            }}
+                            transition={{ duration: 0.2, delay: 0.3 }}
+                            className="border-b border-border pb-3"
                           >
-                            <span className="drawer-span">03.</span>
-                            Contact
+                            <span className="text-accent font-mono text-sm">03.</span>
+                            <span className="ml-3 text-text-primary">Experience</span>
+                          </motion.li>
+                        </Link>
+                        
+                        <Link className="nav-link" href="#projects" onClick={handleScroll}>
+                          <motion.li
+                            initial={{ x: 20, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.2, delay: 0.4 }}
+                            className="border-b border-border pb-3"
+                          >
+                            <span className="text-accent font-mono text-sm">04.</span>
+                            <span className="ml-3 text-text-primary">Projects</span>
+                          </motion.li>
+                        </Link>
+                        
+                        <Link className="nav-link" href="#blog" onClick={handleScroll}>
+                          <motion.li
+                            initial={{ x: 20, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.2, delay: 0.5 }}
+                            className="border-b border-border pb-3"
+                          >
+                            <span className="text-accent font-mono text-sm">05.</span>
+                            <span className="ml-3 text-text-primary">Blog</span>
+                          </motion.li>
+                        </Link>
+                        
+                        <Link className="nav-link" href="#contact" onClick={handleScroll}>
+                          <motion.li
+                            initial={{ x: 20, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.2, delay: 0.6 }}
+                            className="border-b border-border pb-3"
+                          >
+                            <span className="text-accent font-mono text-sm">06.</span>
+                            <span className="ml-3 text-text-primary">Contact</span>
                           </motion.li>
                         </Link>
                       </ul>
+                      
                       <Link href="/resume.pdf" target="_blank">
                         <motion.button
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
-                          transition={{ delay: 0.6, ease: "easeIn" }}
-                          className="w-32 h-10 rounded-md text-textGreen text-[13px] border border-textGreen hover:bg-hoverColor duration-300"
+                          transition={{ delay: 0.7 }}
+                          className="btn btn-primary w-full"
                         >
-                          Resume
+                          Download Resume
                         </motion.button>
                       </Link>
-                      <div className="flex gap-4">
-                        {socialLinks.map((item) => (
+                      
+                      <div className="flex gap-4 pt-4">
+                        {socialLinks.map((item, index) => (
                           <motion.a
+                            key={item.href}
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.8, ease: "easeIn" }}
+                            transition={{ delay: 0.8 + index * 0.1 }}
                             href={item.href}
                             target="_blank"
-                            key={item.href}
+                            rel="noopener noreferrer"
+                            className="w-10 h-10 bg-accent/10 border border-accent text-accent rounded-full flex items-center justify-center hover:bg-accent hover:text-white transition-all duration-300"
+                            aria-label={`Visit ${item.label} profile`}
                           >
-                            <span className="w-10 h-10 text-xl bg-bodyColor border-[1px] border-zinc-700 hover:border-textGreen text-zinc-200 rounded-full inline-flex items-center justify-center hover:text-textGreen cursor-pointer hover:-translate-y-2 transition-all duration-300">
-                              {item.icon}
-                            </span>
+                            <IconRenderer iconName={item.iconName} className="w-5 h-5" />
                           </motion.a>
                         ))}
                       </div>

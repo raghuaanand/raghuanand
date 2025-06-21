@@ -8,7 +8,7 @@ import ContactOverview from "@/components/sections/contact-overview";
 import Footer from "@/components/footer";
 import DetailModal from "@/components/detail-modal";
 
-const HomePage = () => {
+const OverviewPage = () => {
   return (
     <>
       <Hero />
@@ -24,4 +24,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default OverviewPage;

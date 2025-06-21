@@ -1,6 +1,4 @@
 import { ArchiveProjects, FeaturedProjects } from "@/lib/types";
-import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
 
 const recentTechnologies: string[] = [
   "JavaScript (ES6+)",
@@ -20,19 +18,23 @@ const recentTechnologies: string[] = [
 const socialLinks = [
   {
     href: "https://github.com/raghuaanand",
-    icon: <FaGithub />,
+    iconName: "FaGithub",
+    label: "GitHub"
   },
   {
     href: "https://www.linkedin.com/in/raghuanand",
-    icon: <FaLinkedin />,
+    iconName: "FaLinkedin",
+    label: "LinkedIn"
   },
   {
     href: "mailto:raghuaanand@gmail.com",
-    icon: <MdEmail />,
+    iconName: "MdEmail",
+    label: "Email"
   },
   {
     href: "https://api.whatsapp.com/send/?phone=917762091121",
-    icon: <FaWhatsapp />,
+    iconName: "FaWhatsapp",
+    label: "WhatsApp"
   },
 ];
 
@@ -184,5 +186,123 @@ const archievedProjects: ArchiveProjects = [
   },
 ];
 
-export { archievedProjects, featuredProjects, recentTechnologies, socialLinks };
+// Experience data
+const experiences = [
+  {
+    title: "Full-Stack Developer",
+    company: "Tech Solutions Inc.",
+    period: "2023 - Present",
+    achievements: [
+      "Developed and maintained 5+ web applications using React, Node.js, and MongoDB",
+      "Improved application performance by 40% through code optimization and best practices",
+      "Collaborated with cross-functional teams to deliver projects on time and within scope",
+      "Mentored 2 junior developers and conducted code reviews"
+    ],
+    technologies: ["React", "Node.js", "MongoDB", "AWS", "Docker"]
+  },
+  {
+    title: "Frontend Developer Intern",
+    company: "Digital Agency",
+    period: "2022 - 2023",
+    achievements: [
+      "Built responsive web interfaces for 10+ client projects",
+      "Implemented modern CSS frameworks and improved UI/UX design",
+      "Reduced page load times by 30% through optimization techniques"
+    ],
+    technologies: ["React", "TypeScript", "Tailwind CSS", "Next.js"]
+  }
+];
+
+// Education data
+const education = [
+  {
+    degree: "Bachelor of Engineering in Computer Science",
+    institution: "Indian Institute of Technology",
+    period: "2020 - 2024",
+    gpa: "8.5/10",
+    relevantCourses: [
+      "Data Structures & Algorithms",
+      "Database Management Systems",
+      "Software Engineering",
+      "Web Technologies",
+      "Computer Networks"
+    ]
+  }
+];
+
+// Skills categories
+const skillCategories = [
+  {
+    title: "Frontend Development",
+    iconName: "FaCode",
+    skills: [
+      { name: "React/Next.js", level: 5 },
+      { name: "TypeScript", level: 4 },
+      { name: "Tailwind CSS", level: 5 },
+      { name: "JavaScript (ES6+)", level: 5 },
+      { name: "HTML5/CSS3", level: 5 }
+    ]
+  },
+  {
+    title: "Backend Development",
+    iconName: "FaServer",
+    skills: [
+      { name: "Node.js", level: 4 },
+      { name: "Express.js", level: 4 },
+      { name: "MongoDB", level: 4 },
+      { name: "PostgreSQL", level: 3 },
+      { name: "REST APIs", level: 4 }
+    ]
+  },
+  {
+    title: "Tools & Technologies",
+    iconName: "FaTools",
+    skills: [
+      { name: "Git/GitHub", level: 5 },
+      { name: "Docker", level: 3 },
+      { name: "AWS", level: 3 },
+      { name: "Vercel/Netlify", level: 4 },
+      { name: "CI/CD", level: 3 }
+    ]
+  }
+];
+
+// Blog posts data
+const blogPosts = [
+  {
+    title: "Building Scalable React Applications with TypeScript",
+    summary: "Learn how to structure large React applications using TypeScript, custom hooks, and modern patterns for maintainable code.",
+    category: "React",
+    date: "2024-01-15",
+    readTime: 8,
+    link: "https://dev.to/raghuanand/building-scalable-react-applications"
+  },
+  {
+    title: "Optimizing Node.js Performance: Best Practices",
+    summary: "Discover essential techniques to improve your Node.js application performance, from memory management to database optimization.",
+    category: "Node.js",
+    date: "2023-12-20",
+    readTime: 6,
+    link: "https://dev.to/raghuanand/nodejs-performance-optimization"
+  },
+  {
+    title: "Modern CSS Layout Techniques with Grid and Flexbox",
+    summary: "Master CSS Grid and Flexbox to create responsive layouts that work across all devices and browsers.",
+    category: "CSS",
+    date: "2023-11-10",
+    readTime: 5,
+    link: "https://dev.to/raghuanand/modern-css-layouts"
+  }
+];
+
+export { 
+  recentTechnologies, 
+  socialLinks, 
+  featuredProjects, 
+  archievedProjects,
+  experiences,
+  education,
+  skillCategories,
+  blogPosts
+};
 
