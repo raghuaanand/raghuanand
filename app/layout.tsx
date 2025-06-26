@@ -1,6 +1,3 @@
-import LeftSide from "@/components/left-side";
-import Navbar from "@/components/navbar";
-import RightSide from "@/components/right-side";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -36,28 +33,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Raghu Anand - Full-Stack Software Engineer specializing in modern web technologies. View my portfolio of projects and professional experience." />
-        <meta name="keywords" content="software engineer, full-stack developer, web development, React, Next.js, portfolio" />
-        <meta property="og:title" content="Raghu Anand - Full-Stack Software Engineer" />
-        <meta property="og:description" content="Portfolio of Raghu Anand, Full-Stack Software Engineer specializing in modern web technologies." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://raghuanand.tech" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Raghu Anand - Full-Stack Software Engineer" />
-        <meta name="twitter:description" content="Portfolio showcasing projects and expertise in web development." />
-        <link rel="canonical" href="https://raghuanand.tech" />
-      </head>
-      <body className="min-h-screen font-sans bg-background text-text-primary antialiased">
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
-          <main className="flex-1">
-            {children}
-          </main>
-          <LeftSide />
-          <RightSide />
-        </div>
+      <body className="min-h-screen font-sans bg-white text-gray-900 antialiased">
+        {children}
       </body>
     </html>
   );

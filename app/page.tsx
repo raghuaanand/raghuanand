@@ -1,26 +1,20 @@
-import Hero from "@/components/sections/hero";
-import AboutOverview from "@/components/sections/about-overview";
-import SkillsOverview from "@/components/sections/skills-overview";
-import ExperienceOverview from "@/components/sections/experience-overview";
-import ProjectsOverview from "@/components/sections/projects-overview";
-import BlogOverview from "@/components/sections/blog-overview";
-import ContactOverview from "@/components/sections/contact-overview";
+"use client";
+
+import HeroSection from "@/components/hero-section";
+import ProjectsSection from "@/components/projects-section";
+import ExperienceEducation from "@/components/experience-education";
 import Footer from "@/components/footer";
-import DetailModal from "@/components/detail-modal";
 
 const HomePage = () => {
   return (
-    <>
-      <Hero />
-      <AboutOverview />
-      <SkillsOverview />
-      <ExperienceOverview />
-      <ProjectsOverview />
-      <BlogOverview />
-      <ContactOverview />
-      <Footer />
-      <DetailModal />
-    </>
+    <div className="min-h-screen bg-white">
+      {/* Main Content Container */}
+      <div className="max-w-2xl mx-auto px-6 py-12 lg:py-16">
+        <HeroSection />
+        <ExperienceEducation />
+        <Footer />
+      </div>
+    </div>
   );
 };
 

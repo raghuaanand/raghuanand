@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import classic fonts - serif for headings, sans-serif for body */
-@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap");
+/* Import clean, modern fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600;700&display=swap");
 
 /* Base styles */
 html {
@@ -14,28 +14,27 @@ html {
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   line-height: 1.6;
-  color: #2d3748;
-  background-color: #f7fafc;
+  color: #374151;
+  background-color: #ffffff;
 }
 
-/* Improved scrollbar styling */
+/* Minimal scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
-  height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #cbd5e0;
+  background-color: #d1d5db;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #f7fafc;
+  background-color: transparent;
 }
 
-/* Focus styles for accessibility */
+/* Clean focus styles */
 *:focus {
-  outline: 2px solid #3182ce;
+  outline: 2px solid #2563eb;
   outline-offset: 2px;
 }
 
@@ -43,290 +42,48 @@ body {
   outline: none;
 }
 
-/* Typography - Classic scale */
+/* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Crimson Text', Georgia, 'Times New Roman', serif;
+  font-family: 'Crimson Text', Georgia, serif;
   font-weight: 600;
-  line-height: 1.2;
-  margin-bottom: 0.5em;
-  color: #1a365d;
+  line-height: 1.3;
+  color: #111827;
 }
 
-h1 { font-size: 2.25rem; } /* 36px */
-h2 { font-size: 1.75rem; } /* 28px */
-h3 { font-size: 1.5rem; } /* 24px */
-h4 { font-size: 1.25rem; } /* 20px */
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, transform, opacity, box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
 
-p {
-  margin-bottom: 1rem;
-  color: #4a5568;
+/* Selection color */
+::selection {
+  background-color: rgba(37, 99, 235, 0.2);
+  color: inherit;
+}
+
+/* Prose styles for better readability */
+.prose {
   line-height: 1.7;
 }
 
-/* Classic button styles */
-.btn {
-  @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2;
+.prose p {
+  margin-bottom: 1rem;
 }
 
-.btn-primary {
-  @apply bg-accent text-white hover:bg-primary focus:ring-accent;
-}
-
-.btn-secondary {
-  @apply bg-transparent text-accent border-accent hover:bg-accent hover:text-white focus:ring-accent;
-}
-
-/* Button size variants */
-.btn-sm {
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-.btn-lg {
-  padding: 1rem 2rem;
-  font-size: 1.125rem;
-}
-
-/* Navigation styles */
-.nav-link {
-  @apply relative flex items-center gap-1 font-medium text-text-secondary hover:text-accent cursor-pointer duration-300 outline-none;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #3182ce;
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-  width: 100%;
-}
-
-/* Card styles */
-.card {
-  @apply bg-surface border border-border rounded-lg p-6 shadow-card transition-all duration-300;
-}
-
-.card:hover {
-  @apply shadow-cardHover transform -translate-y-1;
-}
-
-/* Enhanced card hover effects */
-.card-hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card-hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-/* Section spacing */
-.section {
-  @apply py-16 lg:py-24;
-}
-
-.container {
-  @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
-}
-
-/* Modal content styling */
-.modal-content {
-  padding: 0;
-}
-
-.modal-content section {
-  padding: 1.5rem 1rem;
-  background: transparent;
-}
-
-@media (min-width: 640px) {
-  .modal-content section {
-    padding: 2rem 3rem;
-  }
-}
-
-.modal-content .container {
-  max-width: none;
-  padding: 0;
-}
-
-.modal-content .section {
-  padding: 1.5rem 0;
-}
-
-@media (min-width: 640px) {
-  .modal-content .section {
-    padding: 2rem 0;
-  }
-}
-
-/* Animation classes */
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease-out;
-}
-
-.animate-on-scroll.animated {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Enhanced button interactions */
-.btn {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  transform: translateY(0);
-}
-
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-.btn:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.btn:active {
-  transform: translateY(0) scale(0.98);
-}
-
-/* Card hover effects */
-.card {
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-}
-
-/* Smooth scroll for better UX */
-.scroll-smooth {
-  scroll-behavior: smooth;
-}
-
-/* Modal animations */
-@keyframes modalSlideIn {
+/* Custom animations */
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: scale(0.95) translateY(20px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: translateY(0);
   }
 }
 
-.modal-enter {
-  animation: modalSlideIn 0.3s ease-out;
-}
-
-/* Professional project card button */
-.project-button {
-  @apply inline-flex items-center px-4 py-2 bg-transparent border border-accent text-accent rounded-md font-medium transition-all duration-300 hover:bg-accent hover:text-white focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
-}
-
-/* Drawer span styling */
-.drawer-span {
-  @apply text-accent block text-center mb-1 font-medium;
-}
-
-/* Utility classes for enhanced design */
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Line clamp utilities */
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Improved focus styles for better accessibility */
-.focus-ring:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #3182ce, 0 0 0 4px rgba(49, 130, 206, 0.1);
-}
-
-/* Smooth transitions for interactive elements */
-.transition-smooth {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Professional gradient backgrounds */
-.gradient-primary {
-  background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
-}
-
-.gradient-accent {
-  background: linear-gradient(135deg, #3182ce 0%, #2c5aa0 100%);
-}
-
-/* Enhanced shadow system */
-.shadow-elevated {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-/* Professional text styles */
-.text-balance {
-  text-wrap: balance;
-}
-
-/* Improved modal backdrop */
-.modal-backdrop {
-  backdrop-filter: blur(8px);
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* Smooth modal animations */
-.modal-enter {
-  opacity: 0;
-  transform: scale(0.95);
-}
-
-.modal-enter-active {
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 300ms, transform 300ms;
-}
-
-.modal-exit {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.modal-exit-active {
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 200ms, transform 200ms;
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
 }
