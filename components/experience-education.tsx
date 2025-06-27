@@ -56,7 +56,7 @@ export default function ExperienceEducation() {
                             </div>
 
                             <div className="space-y-1">
-                                {exp.achievements.slice(0, 2).map((achievement, achIndex) => (
+                                {exp.achievements.slice(0, 3).map((achievement, achIndex) => (
                                     <p key={achIndex} className="text-gray-600 leading-relaxed">
                                         • {achievement}
                                     </p>
@@ -111,6 +111,9 @@ export default function ExperienceEducation() {
                         <p className="text-sm text-gray-500">
                             2018 - 2020 • Science Stream (PCM) • CBSE
                         </p>
+                        <p className="text-sm text-gray-500">
+                                Percentage: 70.60%
+                        </p>
                     </div>
 
                     {/* 10th Grade */}
@@ -123,6 +126,9 @@ export default function ExperienceEducation() {
                         </p>
                         <p className="text-sm text-gray-500">
                             2016 - 2018 • KSEEB
+                        </p>
+                        <p className="text-sm text-gray-500">
+                                Percentage: 98.08%
                         </p>
                     </div>
                 </div>

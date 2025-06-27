@@ -25,8 +25,22 @@ const socialLinks = [
 
 const featuredProjects: FeaturedProjects = [
   {
+    title: "Course Hub",
+    description: "A full-featured course marketplace built with Next.js and Express.js, offering secure payments, video delivery, and role-based access control.",
+    highlights: [
+      "Real-time collaborative document editing",
+      "Secure user authentication with Clerk",
+      "Dynamic content updates with Convex database",
+      "Responsive UI with Tailwind CSS and Shadcn/UI",
+      "Rich text editing and formatting options"
+    ],
+    github: "https://github.com/raghuaanand/course-marketplace",
+    live: "https://course-hub.raghuanand.tech/",
+    stack: ["Next.js", "Node.js", "Express.js", "Stripe", "Tailwind CSS", "Shadcn/UI"]
+  },
+  {
     title: "VirtuMeet",
-    description: "A comprehensive video conferencing platform built with Next.js and TypeScript that replicates Zoom functionality.",
+    description: "A real-time video conferencing platform developed with Next.js and WebRTC that replicates core Zoom functionality with scheduling, personal rooms, and recordings.",
     highlights: [
       "Secure user authentication and meeting creation",
       "Real-time video/audio communication with WebRTC",
@@ -41,7 +55,7 @@ const featuredProjects: FeaturedProjects = [
   },
   {
     title: "Smart Scholar",
-    description: "An AI-powered online platform designed to empower students with cutting-edge tools for their academic journey.",
+    description: "An AI-powered academic assistant built with Next.js and Groq API, offering 10+ intelligent tools for content generation, real-time chat, and student productivity.",
     highlights: [
       "AI-powered text summarization for complex academic content",
       "Personalized career path recommendations",
@@ -54,20 +68,6 @@ const featuredProjects: FeaturedProjects = [
     live: "https://smartscholar.raghuanand.tech",
     stack: ["React", "Node.js", "OpenAI API", "MongoDB", "Express.js"]
   },
-  {
-    title: "Notion Clone",
-    description: "A comprehensive project management and note-taking platform emulating Notion's functionality with modern web technologies.",
-    highlights: [
-      "Real-time collaborative document editing",
-      "Secure user authentication with Clerk",
-      "Dynamic content updates with Convex database",
-      "Responsive UI with Tailwind CSS and Shadcn/UI",
-      "Rich text editing and formatting options"
-    ],
-    github: "https://github.com/raghuaanand/Notion-Clone",
-    live: "https://notes-raghu.vercel.app",
-    stack: ["Next.js", "Clerk", "Convex", "Tailwind CSS", "Shadcn/UI"]
-  }
 ];
 
 // Experience data
@@ -77,12 +77,12 @@ const experiences = [
     company: "CoPrimes",
     period: "Jan 2025 - Present",
     achievements: [
-      "Developed and maintained 5+ web applications using React, Node.js, and MongoDB",
-      "Improved application performance by 40% through code optimization and best practices",
-      "Collaborated with cross-functional teams to deliver projects on time and within scope",
-      "Mentored 2 junior developers and conducted code reviews"
+      "Developed RESTful APIs using Node.js and Express.js to streamline backend data processing",
+      "Optimized PostgreSQL performance by indexing 50+ tables and analyzing query execution plans",
+      "Increased student content interaction by 30% through intuitive UX and media support",
+      "Developed a rich text editor using Lexical for seamless multimedia content embedding",
     ],
-    technologies: ["React", "Node.js", "MongoDB", "AWS", "Docker"]
+    technologies: ["React", "Node.js", "Next.js", "AWS", "TypeScript", "PostgreSQL"]
   }
 ];
 
