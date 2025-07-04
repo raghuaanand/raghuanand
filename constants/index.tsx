@@ -65,7 +65,7 @@ const featuredProjects: FeaturedProjects = [
     ],
     image: "/smart-scholar.png",
     github: "https://github.com/raghuaanand/SmartScholar",
-    live: "https://smartscholar.raghuanand.tech",
+    live: "https://smart-scholar.raghuanand.tech/",
     stack: ["React", "Node.js", "OpenAI API", "MongoDB", "Express.js"]
   },
 ];
