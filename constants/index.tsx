@@ -35,7 +35,7 @@ const featuredProjects: FeaturedProjects = [
       "Rich text editing and formatting options"
     ],
     github: "https://github.com/raghuaanand/course-marketplace",
-    live: "https://course-hub.raghuanand.tech/",
+    live: "https://course-marketplace-one.vercel.app/",
     stack: ["Next.js", "Node.js", "Express.js", "Stripe", "Tailwind CSS", "Shadcn/UI"]
   },
   {
@@ -50,7 +50,7 @@ const featuredProjects: FeaturedProjects = [
     ],
     image: "/yoom.webp",
     github: "https://github.com/raghuaanand/VirtuMeet",
-    live: "https://virtumeet.raghuanand.tech",
+    live: "https://virtumeet.vercel.app/",
     stack: ["Next.js", "TypeScript", "Tailwind CSS", "WebRTC", "Clerk"]
   },
   {
@@ -65,7 +65,7 @@ const featuredProjects: FeaturedProjects = [
     ],
     image: "/smart-scholar.png",
     github: "https://github.com/raghuaanand/SmartScholar",
-    live: "https://smart-scholar.raghuanand.tech/",
+    live: "https://smart-scholar.vercel.app/",
     stack: ["React", "Node.js", "OpenAI API", "MongoDB", "Express.js"]
   },
 ];
