@@ -9,19 +9,31 @@ const createPostSchema = z.object({
   title: z.string().min(3).max(200),
   slug: z.string().min(3).max(220).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   content: z.string().min(1),
+  contentType: z.string().optional().default("html"),
   published: z.boolean().optional().default(false),
 });
 
-function toExcerpt(markdown: string, maxLen = 180): string {
-  // naive strip markdown
-  const text = markdown
-    .replace(/`{1,3}[\s\S]*?`{1,3}/g, " ") // inline/blocks code
-    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ") // images
-    .replace(/\[[^\]]*\]\([^)]*\)/g, " ") // links
-    .replace(/[*_~>#-]+/g, " ") // md symbols
-    .replace(/`/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+function toExcerpt(content: string, contentType: string = "html", maxLen = 180): string {
+  let text = content;
+  
+  if (contentType === "html") {
+    // Strip HTML tags for excerpt
+    text = content
+      .replace(/<[^>]*>/g, " ") // Remove HTML tags
+      .replace(/\s+/g, " ") // Normalize whitespace
+      .trim();
+  } else {
+    // Handle markdown (legacy)
+    text = content
+      .replace(/`{1,3}[\s\S]*?`{1,3}/g, " ") // inline/blocks code
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, " ") // images
+      .replace(/\[[^\]]*\]\([^)]*\)/g, " ") // links
+      .replace(/[*_~>#-]+/g, " ") // md symbols
+      .replace(/`/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+  
   return text.length > maxLen ? text.slice(0, maxLen).trimEnd() + "…" : text;
 }
 
@@ -37,7 +49,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid payload", issues: parsed.error.flatten() }, { status: 400 });
   }
 
-  const { title, slug, content, published } = parsed.data;
+  const { title, slug, content, contentType, published } = parsed.data;
 
   // Enforce unique slug
   const existingSlug = await prisma.post.findUnique({ where: { slug } });
@@ -45,13 +57,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Slug already exists" }, { status: 409 });
   }
 
-  const excerpt = toExcerpt(content);
+  const excerpt = toExcerpt(content, contentType);
 
   const post = await prisma.post.create({
     data: {
       title,
       slug,
       content,
+      contentType,
       excerpt,
       published: !!published,
       publishedAt: published ? new Date() : null,

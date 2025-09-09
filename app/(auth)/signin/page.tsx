@@ -1,13 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const callbackUrl = searchParams.get("callbackUrl") || "/write";
+  const [callbackUrl, setCallbackUrl] = useState<string>("/write");
+
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      setCallbackUrl(params.get("callbackUrl") || "/write");
+    } catch (e) {
+      // fallback if window isn't available for some reason
+      setCallbackUrl("/write");
+    }
+  }, []);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

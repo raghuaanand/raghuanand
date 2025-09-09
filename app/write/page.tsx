@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import WriteEditor from "@/components/write-editor";
+import NotionEditor from "@/components/notion-editor";
 
 export const metadata = {
   title: "Write",
@@ -15,5 +15,5 @@ export default async function WritePage() {
     redirect(`/signin?callbackUrl=${encodeURIComponent("/write")}`);
   }
 
-  return <WriteEditor />;
+  return <NotionEditor />;
 }

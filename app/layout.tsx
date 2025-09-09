@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import AuthProvider from "@/components/auth-provider";
 
 export const metadata: Metadata = {
   title: "Raghu Anand | Full-Stack Software Engineer",
@@ -34,7 +35,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className="min-h-screen font-sans bg-white text-gray-900 antialiased">
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

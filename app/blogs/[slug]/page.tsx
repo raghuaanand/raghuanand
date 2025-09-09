@@ -28,6 +28,7 @@ export default async function BlogDetailPage({ params }: Props) {
       id: true,
       title: true,
       content: true,
+      contentType: true,
       published: true,
       publishedAt: true,
       createdAt: true,
@@ -45,6 +46,8 @@ export default async function BlogDetailPage({ params }: Props) {
     day: "numeric",
   });
 
+  const isHtml = post.contentType === 'html';
+
   return (
     <div className="min-h-screen bg-white">
       <div className="md:max-w-3xl max-w-2xl mx-auto px-6 py-10">
@@ -52,9 +55,16 @@ export default async function BlogDetailPage({ params }: Props) {
         <p className="text-sm text-gray-500 mb-8">{formatted}</p>
 
         <article className="prose prose-neutral max-w-none">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {post.content}
-          </ReactMarkdown>
+          {isHtml ? (
+            <div 
+              dangerouslySetInnerHTML={{ __html: post.content }}
+              className="prose prose-neutral max-w-none"
+            />
+          ) : (
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {post.content}
+            </ReactMarkdown>
+          )}
         </article>
       </div>
     </div>

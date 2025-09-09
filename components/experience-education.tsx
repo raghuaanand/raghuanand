@@ -67,11 +67,11 @@ export default function ExperienceEducation() {
                         <p className="text-sm text-gray-500">
                             {education[0]?.period || "2021 - 2025"}
                         </p>
-                        {education[0]?.gpa && (
+                        {/* {education[0]?.gpa && (
                             <p className="text-sm text-gray-500">
                                 GPA: {education[0].gpa}
                             </p>
-                        )}
+                        )} */}
                     </div>
 
                     {/* 12th Grade */}
@@ -85,9 +85,9 @@ export default function ExperienceEducation() {
                         <p className="text-sm text-gray-500">
                             2018 - 2020 • Science Stream (PCM) • CBSE
                         </p>
-                        <p className="text-sm text-gray-500">
+                        {/* <p className="text-sm text-gray-500">
                                 Percentage: 70.60%
-                        </p>
+                        </p> */}
                     </div>
 
                     {/* 10th Grade */}
@@ -101,9 +101,9 @@ export default function ExperienceEducation() {
                         <p className="text-sm text-gray-500">
                             2016 - 2018 • KSEEB
                         </p>
-                        <p className="text-sm text-gray-500">
+                        {/* <p className="text-sm text-gray-500">
                                 Percentage: 98.08%
-                        </p>
+                        </p> */}
                     </div>
                 </div>
             </section>

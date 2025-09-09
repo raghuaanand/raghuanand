@@ -39,6 +39,20 @@ const featuredProjects: FeaturedProjects = [
     stack: ["Next.js", "Node.js", "Express.js", "Stripe", "Tailwind CSS", "Shadcn/UI"]
   },
   {
+    title: "Course Hub",
+    description: "A full-featured course marketplace built with Next.js and Express.js, offering secure payments, video delivery, and role-based access control.",
+    highlights: [
+      "Real-time collaborative document editing",
+      "Secure user authentication with Clerk",
+      "Dynamic content updates with Convex database",
+      "Responsive UI with Tailwind CSS and Shadcn/UI",
+      "Rich text editing and formatting options"
+    ],
+    github: "https://github.com/raghuaanand/course-marketplace",
+    live: "https://course-marketplace-one.vercel.app/",
+    stack: ["Next.js", "Node.js", "Express.js", "Stripe", "Tailwind CSS", "Shadcn/UI"]
+  },
+  {
     title: "VirtuMeet",
     description: "A real-time video conferencing platform developed with Next.js and WebRTC that replicates core Zoom functionality with scheduling, personal rooms, and recordings.",
     highlights: [
@@ -77,9 +91,9 @@ const experiences = [
     company: "CoPrimes",
     period: "Jan 2025 - Present",
     achievements: [
-      "Developed RESTful APIs using Node.js and Express.js to streamline backend data processing",
-      "Optimized PostgreSQL performance by indexing 50+ tables and analyzing query execution plans",
-      "Increased student content interaction by 30% through intuitive UX and media support",
+      "Identified redundant API requests, implemented request batching and deduplication, cutting API calls 68% and overall latency 40%.",
+      "Revamped client rendering and component architecture, implemented lazy loading and strategic prefetching, cutting content load by 2.3s (45%) and improving user retention.",
+      "Built automated payload validation pipeline integrated into CI, enforced pre-deploy checks and rollback, catching errors earlier and slashing production bugs 72% month over month.",
       "Developed a rich text editor using Lexical for seamless multimedia content embedding",
     ],
     technologies: ["React", "Node.js", "Next.js", "AWS", "TypeScript", "PostgreSQL"]
