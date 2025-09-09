@@ -7,33 +7,7 @@ export default function ExperienceEducation() {
     return (
         <div className="space-y-16">
 
-            {/* Technologies */}
-            <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-8">Technologies</h2>
 
-                <div className="space-y-4">
-                    <div>
-                        <p className="font-medium text-gray-900 mb-2">Frontend</p>
-                        <p className="text-gray-600">
-                            React.js • Next.js • TypeScript • Tailwind CSS • JavaScript (ES6+)
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="font-medium text-gray-900 mb-2">Backend</p>
-                        <p className="text-gray-600">
-                            Node.js • Express.js • MongoDB • PostgreSQL • Serverless Backend
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="font-medium text-gray-900 mb-2">Tools & DevOps</p>
-                        <p className="text-gray-600">
-                            Git/GitHub • Docker • AWS • Vercel • CI/CD • WebRTC • Prisma • Redis • Linux
-                        </p>
-                    </div>
-                </div>
-            </section>
             {/* Work Experience */}
             <section>
                 <h2 className="text-2xl font-bold text-gray-900 mb-8">Work Experience</h2>
@@ -134,6 +108,33 @@ export default function ExperienceEducation() {
                 </div>
             </section>
 
+                        {/* Technologies */}
+            <section>
+                <h2 className="text-2xl font-bold text-gray-900 mb-8">Technologies</h2>
+
+                <div className="space-y-4">
+                    <div>
+                        <p className="font-medium text-gray-900 mb-2">Frontend</p>
+                        <p className="text-gray-600">
+                            React.js • Next.js • TypeScript • Tailwind CSS • JavaScript (ES6+)
+                        </p>
+                    </div>
+
+                    <div>
+                        <p className="font-medium text-gray-900 mb-2">Backend</p>
+                        <p className="text-gray-600">
+                            Node.js • Express.js • MongoDB • PostgreSQL • Serverless Backend
+                        </p>
+                    </div>
+
+                    <div>
+                        <p className="font-medium text-gray-900 mb-2">Tools & DevOps</p>
+                        <p className="text-gray-600">
+                            Git/GitHub • Docker • AWS • Vercel • CI/CD • WebRTC • Prisma • Redis • Linux
+                        </p>
+                    </div>
+                </div>
+            </section>
 
         </div>
     );
