@@ -27,7 +27,7 @@ export default function HeroSection() {
         </p>
         
         {/* Bio */}
-        <p className="text-gray-700 leading-relaxed mb-6 max-w-lg">
+        <p className="text-gray-700 max-w-5xl leading-relaxed mb-6 ">
           I build scalable web applications using React, Node.js, and modern technologies. 
           Passionate about creating solutions that solve real-world problems.
         </p>

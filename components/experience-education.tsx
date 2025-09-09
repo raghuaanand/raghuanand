@@ -7,33 +7,7 @@ export default function ExperienceEducation() {
     return (
         <div className="space-y-16">
 
-            {/* Technologies */}
-            <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-8">Technologies</h2>
 
-                <div className="space-y-4">
-                    <div>
-                        <p className="font-medium text-gray-900 mb-2">Frontend</p>
-                        <p className="text-gray-600">
-                            React.js • Next.js • TypeScript • Tailwind CSS • JavaScript (ES6+)
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="font-medium text-gray-900 mb-2">Backend</p>
-                        <p className="text-gray-600">
-                            Node.js • Express.js • MongoDB • PostgreSQL • Serverless Backend
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="font-medium text-gray-900 mb-2">Tools & DevOps</p>
-                        <p className="text-gray-600">
-                            Git/GitHub • Docker • AWS • Vercel • CI/CD • WebRTC • Prisma • Redis • Linux
-                        </p>
-                    </div>
-                </div>
-            </section>
             {/* Work Experience */}
             <section>
                 <h2 className="text-2xl font-bold text-gray-900 mb-8">Work Experience</h2>
@@ -93,11 +67,11 @@ export default function ExperienceEducation() {
                         <p className="text-sm text-gray-500">
                             {education[0]?.period || "2021 - 2025"}
                         </p>
-                        {education[0]?.gpa && (
+                        {/* {education[0]?.gpa && (
                             <p className="text-sm text-gray-500">
                                 GPA: {education[0].gpa}
                             </p>
-                        )}
+                        )} */}
                     </div>
 
                     {/* 12th Grade */}
@@ -111,9 +85,9 @@ export default function ExperienceEducation() {
                         <p className="text-sm text-gray-500">
                             2018 - 2020 • Science Stream (PCM) • CBSE
                         </p>
-                        <p className="text-sm text-gray-500">
+                        {/* <p className="text-sm text-gray-500">
                                 Percentage: 70.60%
-                        </p>
+                        </p> */}
                     </div>
 
                     {/* 10th Grade */}
@@ -127,13 +101,40 @@ export default function ExperienceEducation() {
                         <p className="text-sm text-gray-500">
                             2016 - 2018 • KSEEB
                         </p>
-                        <p className="text-sm text-gray-500">
+                        {/* <p className="text-sm text-gray-500">
                                 Percentage: 98.08%
-                        </p>
+                        </p> */}
                     </div>
                 </div>
             </section>
 
+                        {/* Technologies */}
+            <section>
+                <h2 className="text-2xl font-bold text-gray-900 mb-8">Technologies</h2>
+
+                <div className="space-y-4">
+                    <div>
+                        <p className="font-medium text-gray-900 mb-2">Frontend</p>
+                        <p className="text-gray-600">
+                            React.js • Next.js • TypeScript • Tailwind CSS • JavaScript (ES6+)
+                        </p>
+                    </div>
+
+                    <div>
+                        <p className="font-medium text-gray-900 mb-2">Backend</p>
+                        <p className="text-gray-600">
+                            Node.js • Express.js • MongoDB • PostgreSQL • Serverless Backend
+                        </p>
+                    </div>
+
+                    <div>
+                        <p className="font-medium text-gray-900 mb-2">Tools & DevOps</p>
+                        <p className="text-gray-600">
+                            Git/GitHub • Docker • AWS • Vercel • CI/CD • WebRTC • Prisma • Redis • Linux
+                        </p>
+                    </div>
+                </div>
+            </section>
 
         </div>
     );
