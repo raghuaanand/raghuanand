@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import prisma from "@/lib/prisma";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
