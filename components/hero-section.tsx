@@ -16,18 +16,18 @@ export default function HeroSection() {
     <section className="mb-16">
       {/* Name and Title */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">
+        <h1 className="text-4xl font-roboto font-bold text-gray-900 mb-2 homepage-title">
           Raghu Anand
         </h1>
-        <p className="text-xl text-gray-600 mb-4">
+        <p className="text-xl font-roboto text-gray-600 mb-4 homepage-content">
           Full-Stack Software Engineer
         </p>
-        <p className="text-base text-gray-500 mb-6">
+        <p className="text-base font-roboto text-gray-500 mb-6 homepage-content">
           📍 India
         </p>
         
         {/* Bio */}
-        <p className="text-gray-700 max-w-5xl leading-relaxed mb-6 ">
+        <p className="text-gray-700 max-w-5xl font-roboto homepage-content mb-6">
           I build scalable web applications using React, Node.js, and modern technologies. 
           Passionate about creating solutions that solve real-world problems.
         </p>
@@ -37,7 +37,7 @@ export default function HeroSection() {
           <a 
             href="/resume.pdf" 
             download
-            className="text-blue-600 hover:text-blue-700 underline underline-offset-2"
+            className="text-blue-600 hover:text-blue-700 underline underline-offset-2 font-roboto"
           >
             resume
           </a>
@@ -52,7 +52,7 @@ export default function HeroSection() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-700 underline underline-offset-2"
+                className="text-blue-600 hover:text-blue-700 underline underline-offset-2 font-roboto"
               >
                 {label}
               </a>

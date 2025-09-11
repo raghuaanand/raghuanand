@@ -30,6 +30,7 @@ model Post {
   slug        String   @unique
   content     String   // Now stores rich HTML/JSON content from TipTap
   contentType String   @default("html") // "html" or "json"
+  description String?  // User-provided description for blog listing
   excerpt     String?
   published   Boolean  @default(false)
   publishedAt DateTime?
