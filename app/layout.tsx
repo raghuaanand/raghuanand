@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
+
+
 import AuthProvider from "@/components/auth-provider";
+import BackButton from "@/components/back-button";
 
 export const metadata: Metadata = {
   title: "Raghu Anand | Full-Stack Software Engineer",
@@ -36,6 +39,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className="min-h-screen font-sans bg-white text-gray-900 antialiased">
         <AuthProvider>
+          <BackButton />
           {children}
         </AuthProvider>
       </body>

@@ -21,6 +21,7 @@ const config: Config = {
       fontFamily: {
         serif: ["Crimson Text", "Georgia", "Cambria", "Times New Roman", "serif"], // Classic serif for headings
         sans: ["Inter", "system-ui", "-apple-system", "sans-serif"], // Clean sans-serif for body
+        roboto: ["Roboto Condensed", "-apple-system", "BlinkMacSystemFont", "sans-serif"], // Medium-style font
         mono: ["Monaco", "Consolas", "Liberation Mono", "monospace"],
         // Keep existing for backward compatibility
         bodyFont: ["Inter", "system-ui", "-apple-system", "sans-serif"],

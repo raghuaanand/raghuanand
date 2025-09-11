@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEditor, EditorContent } from '@tiptap/react';
@@ -22,6 +22,11 @@ import Underline from '@tiptap/extension-underline';
 import Highlight from '@tiptap/extension-highlight';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
 import { slugify } from "@/lib/utils";
+import { Color } from '@tiptap/extension-color';
+import { TextStyle } from '@tiptap/extension-text-style';
+import { FontSize } from '@tiptap/extension-font-size';
+import { Extension } from '@tiptap/core';
+import { Suggestion } from '@tiptap/suggestion';
 
 // Import highlighting languages
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -38,6 +43,31 @@ const lowlight = createLowlight();
 
 // Register languages with lowlight
 lowlight.register({ javascript, typescript, css, python, java, php, sql, json });
+
+// Slash Commands Extension
+const SlashCommands = Extension.create({
+  name: 'slashCommands',
+
+  addOptions() {
+    return {
+      suggestion: {
+        char: '/',
+        command: ({ editor, range, props }: any) => {
+          props.command({ editor, range });
+        },
+      },
+    };
+  },
+
+  addProseMirrorPlugins() {
+    return [
+      Suggestion({
+        editor: this.editor,
+        ...this.options.suggestion,
+      }),
+    ];
+  },
+});
 
 interface ToolbarButtonProps {
   onClick: () => void;
@@ -62,22 +92,54 @@ function ToolbarButton({ onClick, isActive, disabled, children, title }: Toolbar
   );
 }
 
-export default function NotionEditor() {
+type NotionEditorProps = {
+  editId?: string | null;
+  onClose?: () => void;
+  onSaved?: (post: { id: string; title: string; slug: string; published: boolean }) => void;
+};
+
+export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorProps = {}) {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [slug, setSlug] = useState("");
   const [submitting, setSubmitting] = useState<"idle" | "save" | "publish">("idle");
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [slugTouched, setSlugTouched] = useState(false);
+  const [showSlashMenu, setShowSlashMenu] = useState(false);
+  const [slashMenuPosition, setSlashMenuPosition] = useState({ x: 0, y: 0 });
+
+  // Slash commands data
+  const slashCommands = [
+    { title: 'Heading 1', description: 'Large section heading', command: () => editor?.chain().focus().toggleHeading({ level: 1 }).run() },
+    { title: 'Heading 2', description: 'Medium section heading', command: () => editor?.chain().focus().toggleHeading({ level: 2 }).run() },
+    { title: 'Heading 3', description: 'Small section heading', command: () => editor?.chain().focus().toggleHeading({ level: 3 }).run() },
+    { title: 'Bullet List', description: 'Create a simple bullet list', command: () => editor?.chain().focus().toggleBulletList().run() },
+    { title: 'Numbered List', description: 'Create a list with numbering', command: () => editor?.chain().focus().toggleOrderedList().run() },
+    { title: 'Task List', description: 'Track tasks with todo list', command: () => editor?.chain().focus().toggleTaskList().run() },
+    { title: 'Quote', description: 'Capture a quote', command: () => editor?.chain().focus().toggleBlockquote().run() },
+    { title: 'Code Block', description: 'Capture a code snippet', command: () => editor?.chain().focus().toggleCodeBlock().run() },
+    { title: 'Table', description: 'Insert a table', command: () => editor?.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run() },
+    { title: 'Divider', description: 'Visually divide sections', command: () => editor?.chain().focus().setHorizontalRule().run() },
+  ];
 
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
       StarterKit.configure({
         codeBlock: false, // We'll use CodeBlockLowlight instead
+        heading: {
+          HTMLAttributes: {
+            class: 'heading',
+          },
+          levels: [1, 2, 3],
+        },
       }),
+      TextStyle,
+      Color,
+      FontSize,
       Image.configure({
         HTMLAttributes: {
           class: 'max-w-full h-auto rounded-lg',
@@ -144,11 +206,141 @@ export default function NotionEditor() {
           class: 'my-4 border-gray-300',
         },
       }),
+      SlashCommands.configure({
+        suggestion: {
+          items: ({ query }: { query: string }) => {
+            return slashCommands.filter(item => 
+              item.title.toLowerCase().includes(query.toLowerCase())
+            ).slice(0, 10);
+          },
+          render: () => {
+            let component: any;
+            let popup: any;
+
+            return {
+              onStart: (props: any) => {
+                component = {
+                  selectedIndex: 0,
+                  selectItem: (index: number) => {
+                    const item = props.items[index];
+                    if (item) {
+                      props.command({ command: item.command });
+                    }
+                  },
+                };
+
+                if (!props.clientRect) {
+                  return;
+                }
+
+                popup = document.createElement('div');
+                popup.className = 'slash-menu absolute z-50 bg-white border border-gray-300 rounded-lg shadow-lg p-2 min-w-64';
+                popup.style.left = props.clientRect().left + 'px';
+                popup.style.top = props.clientRect().bottom + 'px';
+
+                document.body.appendChild(popup);
+                
+                const renderItems = () => {
+                  popup.innerHTML = props.items.map((item: any, index: number) => 
+                    `<div class="slash-item p-2 rounded hover:bg-gray-100 cursor-pointer ${
+                      index === component.selectedIndex ? 'bg-blue-50' : ''
+                    }">
+                      <div class="font-medium text-sm">${item.title}</div>
+                      <div class="text-xs text-gray-500">${item.description}</div>
+                    </div>`
+                  ).join('');
+
+                  const items = popup.querySelectorAll('.slash-item');
+                  items.forEach((item: any, index: number) => {
+                    item.addEventListener('click', () => {
+                      component.selectItem(index);
+                    });
+                  });
+                };
+
+                renderItems();
+
+                const onKeyDown = (event: KeyboardEvent) => {
+                  if (event.key === 'ArrowUp') {
+                    component.selectedIndex = ((component.selectedIndex + props.items.length - 1) % props.items.length);
+                    renderItems();
+                    return true;
+                  }
+
+                  if (event.key === 'ArrowDown') {
+                    component.selectedIndex = ((component.selectedIndex + 1) % props.items.length);
+                    renderItems();
+                    return true;
+                  }
+
+                  if (event.key === 'Enter') {
+                    component.selectItem(component.selectedIndex);
+                    return true;
+                  }
+
+                  return false;
+                };
+
+                document.addEventListener('keydown', onKeyDown);
+                popup.onKeyDown = onKeyDown;
+              },
+
+              onUpdate(props: any) {
+                if (!popup) return;
+
+                if (props.clientRect) {
+                  popup.style.left = props.clientRect().left + 'px';
+                  popup.style.top = props.clientRect().bottom + 'px';
+                }
+
+                const renderItems = () => {
+                  popup.innerHTML = props.items.map((item: any, index: number) => 
+                    `<div class="slash-item p-2 rounded hover:bg-gray-100 cursor-pointer ${
+                      index === component.selectedIndex ? 'bg-blue-50' : ''
+                    }">
+                      <div class="font-medium text-sm">${item.title}</div>
+                      <div class="text-xs text-gray-500">${item.description}</div>
+                    </div>`
+                  ).join('');
+
+                  const items = popup.querySelectorAll('.slash-item');
+                  items.forEach((item: any, index: number) => {
+                    item.addEventListener('click', () => {
+                      component.selectItem(index);
+                    });
+                  });
+                };
+
+                renderItems();
+              },
+
+              onKeyDown(props: any) {
+                if (props.event.key === 'Escape') {
+                  if (popup) {
+                    document.body.removeChild(popup);
+                    popup = null;
+                  }
+                  return true;
+                }
+
+                return popup?.onKeyDown?.(props.event);
+              },
+
+              onExit() {
+                if (popup) {
+                  document.body.removeChild(popup);
+                  popup = null;
+                }
+              },
+            };
+          },
+        },
+      }),
     ],
     content: '',
     editorProps: {
       attributes: {
-        class: 'prose prose-neutral max-w-none focus:outline-none min-h-[400px] p-4',
+        class: 'prose prose-neutral max-w-none focus:outline-none min-h-[400px] p-4 editor-content',
       },
     },
   });
@@ -243,6 +435,7 @@ export default function NotionEditor() {
         
         const payload = {
           title: title.trim(),
+          description: description.trim() || null,
           slug: slug.trim(),
           content,
           contentType: 'html',
@@ -250,11 +443,20 @@ export default function NotionEditor() {
         };
         console.log('Payload:', payload);
         
-        const res = await fetch("/api/posts", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+        let res: Response;
+        if (editId) {
+          res = await fetch(`/api/posts/${editId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+        } else {
+          res = await fetch("/api/posts", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+        }
 
         console.log('Response status:', res.status);
         console.log('Response headers:', res.headers);
@@ -273,8 +475,12 @@ export default function NotionEditor() {
           return;
         }
 
-        const data = (await res.json()) as { id: string; slug: string };
+  const data = (await res.json()) as { id: string; slug: string }; 
         console.log('Success response:', data);
+
+        const saved = { id: data.id, title: title.trim(), slug: data.slug, published: publish };
+        // Notify parent for optimistic UI
+        onSaved && onSaved(saved);
 
         if (publish) {
           router.replace(`/blogs/${data.slug}`);
@@ -289,8 +495,32 @@ export default function NotionEditor() {
         setSubmitting("idle");
       }
     },
-    [title, slug, editor, router, editorContent, session]
+  [title, description, slug, editor, router, editorContent, session, editId, onSaved]
   );
+
+  // Load post if editId provided
+  useEffect(() => {
+    if (!editId) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/posts/${editId}`);
+        if (!res.ok) return;
+        const json = await res.json();
+        if (cancelled) return;
+        const post = json.post;
+        setTitle(post.title || "");
+        setDescription(post.description || "");
+        setSlug(post.slug || "");
+        if (editor && post.content) {
+          editor.commands.setContent(post.content);
+        }
+      } catch (e) {
+        console.error("Failed to load post for editing", e);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [editId, editor]);
 
   // Check authentication after all hooks
   if (status === "loading") {
@@ -333,8 +563,8 @@ export default function NotionEditor() {
   }
 
   return (
-    <div className="min-h-screen min-w-5xl bg-white">
-      <div className="max-w-4xl mx-auto px-6 py-10">
+    <div className="min-h-screen bg-white">
+      <div className="max-w-6xl mx-auto px-6 py-10">
         <h1 className="text-3xl font-semibold mb-6">Write</h1>
 
         <div className="space-y-4 mb-6">
@@ -348,6 +578,20 @@ export default function NotionEditor() {
               className="w-full rounded-md border border-gray-300 px-3 py-2 text-2xl font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Post title"
             />
+          </div>
+
+          <div>
+            <label className="block text-sm text-gray-700 mb-1" htmlFor="description">Description</label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
+              placeholder="Brief description for the blog listing page (optional)"
+              rows={3}
+              maxLength={300}
+            />
+            <p className="text-xs text-gray-500 mt-1">This will be shown in the blog listing page. Max 300 characters.</p>
           </div>
 
           <div>
@@ -367,8 +611,26 @@ export default function NotionEditor() {
           </div>
         </div>
 
-        {/* Toolbar */}
-        <div className="border border-gray-300 rounded-t-md p-3 bg-gray-50 flex flex-wrap gap-1">
+        {/* Sticky Toolbar */}
+        <div className="sticky top-0 z-10 border border-gray-300 rounded-t-md p-3 bg-gray-50 flex flex-wrap gap-1 shadow-sm">
+          <ToolbarButton
+            onClick={() => editor.chain().focus().undo().run()}
+            disabled={!editor.can().undo()}
+            title="Undo"
+          >
+            ↶ Undo
+          </ToolbarButton>
+
+          <ToolbarButton
+            onClick={() => editor.chain().focus().redo().run()}
+            disabled={!editor.can().redo()}
+            title="Redo"
+          >
+            ↷ Redo
+          </ToolbarButton>
+
+          <div className="w-px h-8 bg-gray-300 mx-1" />
+
           <ToolbarButton
             onClick={() => editor.chain().focus().toggleBold().run()}
             isActive={editor.isActive('bold')}
@@ -393,13 +655,37 @@ export default function NotionEditor() {
             <u>U</u>
           </ToolbarButton>
 
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleHighlight().run()}
-            isActive={editor.isActive('highlight')}
-            title="Highlight"
-          >
-            <span className="bg-yellow-200">H</span>
-          </ToolbarButton>
+          {/* Background Highlight Color Dropdown */}
+          <div className="relative inline-block">
+            <select
+              className="p-2 rounded-md border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              title="Background Color"
+              value={editor.getAttributes('highlight').color || ''}
+              onChange={e => {
+                const color = e.target.value;
+                if (color) {
+                  editor.chain().focus().toggleHighlight({ color }).run();
+                } else {
+                  editor.chain().focus().unsetHighlight().run();
+                }
+              }}
+              style={{ minWidth: 40 }}
+            >
+              <option value="">Highlight</option>
+              <option value="#fef08a" style={{ backgroundColor: '#fef08a' }}>Yellow</option>
+              <option value="#fed7d7" style={{ backgroundColor: '#fed7d7' }}>Light Red</option>
+              <option value="#fecaca" style={{ backgroundColor: '#fecaca' }}>Red</option>
+              <option value="#fed7aa" style={{ backgroundColor: '#fed7aa' }}>Orange</option>
+              <option value="#d1fae5" style={{ backgroundColor: '#d1fae5' }}>Green</option>
+              <option value="#dbeafe" style={{ backgroundColor: '#dbeafe' }}>Blue</option>
+              <option value="#e0e7ff" style={{ backgroundColor: '#e0e7ff' }}>Indigo</option>
+              <option value="#f3e8ff" style={{ backgroundColor: '#f3e8ff' }}>Purple</option>
+              <option value="#fce7f3" style={{ backgroundColor: '#fce7f3' }}>Pink</option>
+              <option value="#f3f4f6" style={{ backgroundColor: '#f3f4f6' }}>Gray</option>
+              <option value="#f0fdfa" style={{ backgroundColor: '#f0fdfa' }}>Teal</option>
+              <option value="#ecfdf5" style={{ backgroundColor: '#ecfdf5' }}>Emerald</option>
+            </select>
+          </div>
 
           <div className="w-px h-8 bg-gray-300 mx-1" />
 
@@ -527,6 +813,67 @@ export default function NotionEditor() {
           >
             ➡️
           </ToolbarButton>
+
+          <div className="w-px h-8 bg-gray-300 mx-1" />
+
+          <ToolbarButton
+            onClick={() => {
+              const currentSize = editor.getAttributes('textStyle').fontSize || '16px';
+              const currentValue = parseInt(currentSize);
+              const newSize = Math.min(currentValue + 2, 32);
+              editor.chain().focus().setFontSize(`${newSize}px`).run();
+            }}
+            title="Increase Font Size"
+          >
+            A+
+          </ToolbarButton>
+
+          <ToolbarButton
+            onClick={() => {
+              const currentSize = editor.getAttributes('textStyle').fontSize || '16px';
+              const currentValue = parseInt(currentSize);
+              const newSize = Math.max(currentValue - 2, 10);
+              editor.chain().focus().setFontSize(`${newSize}px`).run();
+            }}
+            title="Decrease Font Size"
+          >
+            A-
+          </ToolbarButton>
+
+          {/* Text Color Dropdown */}
+          <div className="relative inline-block">
+            <select
+              className="p-2 rounded-md border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              title="Text Color"
+              value={editor.getAttributes('textStyle').color || ''}
+              onChange={e => {
+                const color = e.target.value;
+                if (color) {
+                  editor.chain().focus().setColor(color).run();
+                } else {
+                  editor.chain().focus().unsetColor().run();
+                }
+              }}
+              style={{ minWidth: 40 }}
+            >
+              <option value="">Text Color</option>
+              <option value="#000000" style={{ color: '#000000' }}>Black</option>
+              <option value="#e11d48" style={{ color: '#e11d48' }}>Red</option>
+              <option value="#f59e42" style={{ color: '#f59e42' }}>Orange</option>
+              <option value="#eab308" style={{ color: '#eab308' }}>Yellow</option>
+              <option value="#22c55e" style={{ color: '#22c55e' }}>Green</option>
+              <option value="#0ea5e9" style={{ color: '#0ea5e9' }}>Sky Blue</option>
+              <option value="#2563eb" style={{ color: '#2563eb' }}>Blue</option>
+              <option value="#6366f1" style={{ color: '#6366f1' }}>Indigo</option>
+              <option value="#a21caf" style={{ color: '#a21caf' }}>Purple</option>
+              <option value="#be185d" style={{ color: '#be185d' }}>Pink</option>
+              <option value="#6b7280" style={{ color: '#6b7280' }}>Gray</option>
+              <option value="#fbbf24" style={{ color: '#fbbf24' }}>Amber</option>
+              <option value="#14b8a6" style={{ color: '#14b8a6' }}>Teal</option>
+              <option value="#b91c1c" style={{ color: '#b91c1c' }}>Dark Red</option>
+              <option value="#f1f5f9" style={{ color: '#f1f5f9' }}>Light Gray</option>
+            </select>
+          </div>
         </div>
 
         {/* Editor */}

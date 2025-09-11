@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Import clean, modern fonts */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap");
 
 /* Base styles */
 html {
@@ -353,4 +353,571 @@ h1, h2, h3, h4, h5, h6 {
   margin: 1.5rem 0;
   padding-left: 1rem;
   color: #6b7280;
+}
+
+/* Medium-style blog layout and typography */
+.medium-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 24px;
+  font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.medium-title {
+  font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #242424;
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
+}
+
+.medium-meta {
+  font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.875rem;
+  color: #6B6B6B;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.medium-content {
+  font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.58;
+  color: #242424;
+  font-weight: 400;
+}
+
+/* Additional Medium-style spacing and typography */
+.medium-content > * + * {
+  margin-top: 1.5rem;
+}
+
+.medium-content > * + h1,
+.medium-content > * + h2,
+.medium-content > * + h3 {
+  margin-top: 2rem;
+}
+
+/* Fine-tune paragraph spacing for better readability */
+.medium-content p + p {
+  margin-top: 1.75rem;
+}
+
+/* Blog content styling for proper heading hierarchy and lists */
+.blog-content h1,
+.ProseMirror h1,
+.medium-content h1 {
+  font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  margin: 2rem 0 1rem 0 !important;
+  color: #242424 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.blog-content h2,
+.ProseMirror h2,
+.medium-content h2 {
+  font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  margin: 2rem 0 0.75rem 0 !important;
+  color: #242424 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.blog-content h3,
+.ProseMirror h3,
+.medium-content h3 {
+  font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  margin: 1.5rem 0 0.5rem 0 !important;
+  color: #242424 !important;
+}
+
+.blog-content ul,
+.ProseMirror ul:not([data-type="taskList"]),
+.medium-content ul {
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+  margin: 1.5rem 0 !important;
+}
+
+.blog-content ol,
+.ProseMirror ol,
+.medium-content ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem !important;
+  margin: 1.5rem 0 !important;
+}
+
+.blog-content li,
+.ProseMirror li,
+.medium-content li {
+  margin: 0.5rem 0 !important;
+  line-height: 1.58 !important;
+}
+
+.blog-content p,
+.ProseMirror p,
+.medium-content p {
+  margin: 1.5rem 0 !important;
+  line-height: 1.58 !important;
+  font-size: 1.125rem !important;
+  color: #242424 !important;
+}
+
+/* Medium-style content elements */
+.medium-content blockquote,
+.blog-content blockquote {
+  border-left: 3px solid #242424 !important;
+  padding-left: 1.5rem !important;
+  margin: 1.5rem 0 !important;
+  font-style: italic !important;
+  font-size: 1.125rem !important;
+  line-height: 1.4 !important;
+  color: #6B6B6B !important;
+  background: none !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-right: 0 !important;
+}
+
+.medium-content code,
+.blog-content code {
+  background-color: #f5f5f5 !important;
+  border-radius: 3px !important;
+  padding: 0.125rem 0.25rem !important;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace !important;
+  font-size: 0.9rem !important;
+  color: #d63384 !important;
+}
+
+.medium-content pre,
+.blog-content pre {
+  background: #f8f9fa !important;
+  border-radius: 6px !important;
+  padding: 1rem !important;
+  margin: 2rem 0 !important;
+  overflow-x: auto !important;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace !important;
+  font-size: 0.875rem !important;
+  line-height: 1.2 !important;
+}
+
+.medium-content pre code,
+.blog-content pre code {
+  background: none !important;
+  padding: 0 !important;
+  color: inherit !important;
+}
+
+/* Ensure code and pre blocks have a tighter line-height so they don't inherit
+   the larger paragraph/medium-content line-height which causes big gaps
+   between code lines. Keep this specific and important so editor/blog code
+   looks compact and readable. */
+.medium-content pre,
+.blog-content pre,
+.ProseMirror pre {
+  line-height: 1.2 !important;
+}
+
+.medium-content pre code,
+.blog-content pre code,
+.ProseMirror pre code,
+.medium-content code,
+.blog-content code,
+.ProseMirror code {
+  line-height: 1.2 !important;
+}
+
+/* Reset any token wrappers or elements inserted by syntax highlighters
+   inside code blocks so they don't receive rounded backgrounds, padding,
+   or block layout that creates separate 'pills' per line. */
+.medium-content pre *,
+.blog-content pre *,
+.ProseMirror pre * {
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline !important;
+  line-height: 1.2 !important;
+}
+
+/* Strong overrides for common syntax-highlighter wrappers that create
+   per-line blocks. These target common class names (token, line, hljs,
+   code-line) and also generic div/span children to ensure they behave
+   like inline tokens inside a <pre>. */
+.medium-content pre div,
+.medium-content pre span,
+.medium-content pre > div,
+.medium-content pre > span,
+.medium-content pre .line,
+.medium-content pre .code-line,
+.medium-content pre .token,
+.medium-content pre .hljs,
+.medium-content pre [class*="token"],
+.medium-content pre [class*="line"],
+.medium-content pre [class*="hljs"] {
+  display: inline !important;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  width: auto !important;
+  white-space: pre !important;
+  line-height: 1.2 !important;
+}
+
+/* Also target the same under .blog-content and .ProseMirror for coverage */
+.blog-content pre div,
+.blog-content pre span,
+.blog-content pre .line,
+.blog-content pre .token,
+.blog-content pre [class*="token"] {
+  display: inline !important;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  width: auto !important;
+  white-space: pre !important;
+  line-height: 1.2 !important;
+}
+
+.ProseMirror pre div,
+.ProseMirror pre span,
+.ProseMirror pre .line,
+.ProseMirror pre .token,
+.ProseMirror pre [class*="token"] {
+  display: inline !important;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  width: auto !important;
+  white-space: pre !important;
+  line-height: 1.2 !important;
+}
+
+/* ReactMarkdown generates standard HTML elements, so we need to target
+   those directly in addition to editor-specific classes */
+.medium-content pre,
+.blog-content pre {
+  white-space: pre !important;
+  overflow-x: auto !important;
+}
+
+/* Ensure ReactMarkdown blockquotes match editor styling */
+.medium-content > blockquote,
+.blog-content > blockquote {
+  border-left: 3px solid #242424 !important;
+  padding-left: 1.5rem !important;
+  margin: 1.5rem 0 !important;
+  font-style: italic !important;
+  font-size: 1.125rem !important;
+  line-height: 1.4 !important;
+  color: #6B6B6B !important;
+  background: none !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Nuclear option: Force all elements inside ReactMarkdown content areas to reset */
+.medium-content blockquote,
+.blog-content blockquote,
+.medium-content pre,
+.blog-content pre {
+  line-height: 1.4 !important;
+}
+
+/* Additional specificity for ReactMarkdown generated elements */
+.blog-content.medium-content blockquote,
+.blog-content.medium-content pre,
+.blog-content.medium-content code {
+  line-height: 1.4 !important;
+}
+
+/* Force consistent blockquote spacing regardless of nested elements */
+.medium-content blockquote *,
+.blog-content blockquote * {
+  line-height: inherit !important;
+  margin: 0.25rem 0 !important;
+}
+
+.medium-content blockquote p:first-child,
+.blog-content blockquote p:first-child {
+  margin-top: 0 !important;
+}
+
+.medium-content blockquote p:last-child,
+.blog-content blockquote p:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Ultra-specific overrides to ensure consistent styling */
+div.blog-content.medium-content blockquote,
+div.medium-content blockquote,
+article.medium-content blockquote {
+  border-left: 3px solid #242424 !important;
+  padding: 0 0 0 1.5rem !important;
+  margin: 1.5rem 0 !important;
+  line-height: 1.4 !important;
+  font-style: italic !important;
+  color: #6B6B6B !important;
+  background: none !important;
+}
+
+div.blog-content.medium-content pre,
+div.medium-content pre,
+article.medium-content pre {
+  line-height: 1.2 !important;
+  background: #f8f9fa !important;
+  border-radius: 6px !important;
+  padding: 1rem !important;
+  margin: 2rem 0 !important;
+  white-space: pre !important;
+}
+
+div.blog-content.medium-content code,
+div.medium-content code,
+article.medium-content code {
+  line-height: 1.2 !important;
+  background-color: #f5f5f5 !important;
+  border-radius: 3px !important;
+  padding: 0.125rem 0.25rem !important;
+}
+
+/* ReactMarkdown paragraph spacing to match editor */
+.medium-content > p,
+.blog-content > p {
+  margin: 1.5rem 0 !important;
+  line-height: 1.58 !important;
+}
+
+/* Tighter spacing for blockquote paragraphs - Maximum specificity */
+.medium-content blockquote p,
+.blog-content blockquote p,
+.ProseMirror blockquote p,
+div.blog-content.medium-content blockquote p,
+div.medium-content blockquote p,
+article.medium-content blockquote p {
+  margin: 0.25rem 0 !important;
+  line-height: 1.4 !important;
+  font-size: inherit !important;
+  padding: 0 !important;
+}
+
+/* Override any framework or component library styles */
+* blockquote p {
+  line-height: 1.4 !important;
+}
+
+* pre {
+  line-height: 1.2 !important;
+}
+
+* code {
+  line-height: 1.2 !important;
+}
+
+/* Ensure ReactMarkdown content specifically gets proper styling */
+[class*="medium-content"] blockquote,
+[class*="blog-content"] blockquote {
+  line-height: 1.4 !important;
+  margin: 1.5rem 0 !important;
+  padding: 0 0 0 1.5rem !important;
+}
+
+[class*="medium-content"] pre,
+[class*="blog-content"] pre {
+  line-height: 1.2 !important;
+  margin: 2rem 0 !important;
+}
+
+[class*="medium-content"] code,
+[class*="blog-content"] code {
+  line-height: 1.2 !important;
+}
+
+/* CRITICAL FIX: Target both dangerouslySetInnerHTML and ReactMarkdown paths */
+/* For HTML content (TipTap editor output) */
+div[class~="blog-content"][class~="medium-content"] > *,
+article[class~="medium-content"] div[class~="blog-content"][class~="medium-content"] > * {
+  line-height: inherit !important;
+}
+
+div[class~="blog-content"][class~="medium-content"] blockquote,
+article[class~="medium-content"] div[class~="blog-content"][class~="medium-content"] blockquote {
+  line-height: 1.4 !important;
+  margin: 1.5rem 0 !important;
+  padding: 0 0 0 1.5rem !important;
+  border-left: 3px solid #242424 !important;
+  font-style: italic !important;
+  color: #6B6B6B !important;
+}
+
+div[class~="blog-content"][class~="medium-content"] pre,
+article[class~="medium-content"] div[class~="blog-content"][class~="medium-content"] pre {
+  line-height: 1.2 !important;
+  margin: 2rem 0 !important;
+  padding: 1rem !important;
+  background: #f8f9fa !important;
+  border-radius: 6px !important;
+}
+
+div[class~="blog-content"][class~="medium-content"] code,
+article[class~="medium-content"] div[class~="blog-content"][class~="medium-content"] code {
+  line-height: 1.2 !important;
+  background-color: #f5f5f5 !important;
+  border-radius: 3px !important;
+  padding: 0.125rem 0.25rem !important;
+}
+
+/* For ReactMarkdown content */
+div[class~="blog-content"][class~="medium-content"] p,
+article[class~="medium-content"] div[class~="blog-content"][class~="medium-content"] p {
+  line-height: 1.58 !important;
+  margin: 1.5rem 0 !important;
+}
+
+/* Emergency override - if all else fails */
+.medium-content .blog-content *,
+.blog-content.medium-content * {
+  line-height: inherit !important;
+}
+
+.medium-content .blog-content blockquote,
+.blog-content.medium-content blockquote {
+  line-height: 1.4 !important;
+}
+
+.medium-content .blog-content pre,
+.blog-content.medium-content pre {
+  line-height: 1.2 !important;
+}
+
+.medium-content .blog-content code,
+.blog-content.medium-content code {
+  line-height: 1.2 !important;
+}
+
+/* First and last paragraph in blockquote should have no top/bottom margin */
+.medium-content blockquote p:first-child,
+.blog-content blockquote p:first-child,
+.ProseMirror blockquote p:first-child {
+  margin-top: 0 !important;
+}
+
+.medium-content blockquote p:last-child,
+.blog-content blockquote p:last-child,
+.ProseMirror blockquote p:last-child {
+  margin-bottom: 0 !important;
+}
+
+.medium-content a,
+.blog-content a {
+  color: #0066CC !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+}
+
+.medium-content a:hover,
+.blog-content a:hover {
+  color: #0052A3 !important;
+}
+
+.medium-content strong,
+.blog-content strong {
+  font-weight: 700 !important;
+  color: #242424 !important;
+}
+
+.medium-content em,
+.blog-content em {
+  font-style: italic !important;
+}
+
+.medium-content img,
+.blog-content img {
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 2rem 0 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Homepage and component styling with Roboto Condensed */
+.homepage-container {
+  font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.homepage-title {
+  font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.homepage-section-title {
+  font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.homepage-content {
+  font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.58;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .medium-container {
+    padding: 0 16px;
+  }
+  
+  .medium-title {
+    font-size: 2rem;
+    line-height: 1.15;
+  }
+  
+  .medium-content {
+    font-size: 1.0625rem;
+  }
+}
+
+/* Wider layout on screens larger than md */
+@media (min-width: 769px) {
+  .medium-container {
+    /* increase max width for better use of horizontal space on larger screens */
+    max-width: 920px;
+    padding: 0 32px;
+  }
+}
+
+/* Extra-large screens: give even more horizontal space */
+@media (min-width: 1280px) {
+  .medium-container {
+    max-width: 1100px;
+  }
+}
+
+/* Editor focus styles */
+.ProseMirror {
+  outline: none;
+  min-height: 200px;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid #e2e8f0;
+}
+
+.ProseMirror:focus {
+  border-color: #3b82f6;
 }

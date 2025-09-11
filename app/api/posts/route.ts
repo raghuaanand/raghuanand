@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 
 const createPostSchema = z.object({
   title: z.string().min(3).max(200),
+  description: z.string().max(300).optional().nullable(),
   slug: z.string().min(3).max(220).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   content: z.string().min(1),
   contentType: z.string().optional().default("html"),
@@ -49,7 +50,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid payload", issues: parsed.error.flatten() }, { status: 400 });
   }
 
-  const { title, slug, content, contentType, published } = parsed.data;
+  const { title, description, slug, content, contentType, published } = parsed.data;
 
   // Enforce unique slug
   const existingSlug = await prisma.post.findUnique({ where: { slug } });
@@ -62,6 +63,7 @@ export async function POST(req: Request) {
   const post = await prisma.post.create({
     data: {
       title,
+      description,
       slug,
       content,
       contentType,
@@ -80,4 +82,53 @@ export async function POST(req: Request) {
   }
 
   return NextResponse.json({ id: post.id, slug: post.slug }, { status: 201 });
+}
+
+export async function GET(req: Request) {
+  try {
+    const url = new URL(req.url);
+    const all = url.searchParams.get("all");
+
+    // If requesting all posts, require admin session
+    if (all === "1") {
+      const session = await getServerSession(authOptions);
+      if (!session || (session.user as any)?.role !== "ADMIN") {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
+
+      const posts = await prisma.post.findMany({
+        orderBy: [{ createdAt: "desc" }],
+        select: {
+          id: true,
+          title: true,
+          slug: true,
+          description: true,
+          excerpt: true,
+          published: true,
+          publishedAt: true,
+          createdAt: true,
+        },
+      });
+      return NextResponse.json({ posts });
+    }
+
+    // Default: only published posts
+    const posts = await prisma.post.findMany({
+      where: { published: true },
+      orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        description: true,
+        excerpt: true,
+        publishedAt: true,
+        createdAt: true,
+      },
+    });
+    return NextResponse.json({ posts });
+  } catch (error) {
+    console.error("GET /api/posts error:", error);
+    return NextResponse.json({ error: "Failed to fetch posts" }, { status: 500 });
+  }
 }
