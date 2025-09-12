@@ -4,6 +4,7 @@ import "./globals.css";
 
 import AuthProvider from "@/components/auth-provider";
 import BackButton from "@/components/back-button";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: "Raghu Anand | Full-Stack Software Engineer",
@@ -41,6 +42,7 @@ export default function RootLayout({
         <AuthProvider>
           <BackButton />
           {children}
+          <Analytics />
         </AuthProvider>
       </body>
     </html>
