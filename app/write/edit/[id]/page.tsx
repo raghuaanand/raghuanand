@@ -14,7 +14,6 @@ export default async function EditPage({ params }: Props) {
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-4xl mx-auto px-6 py-10">
-        <h1 className="text-3xl font-semibold mb-6">Edit Post</h1>
   {/* Client-side editor loaded with editId */}
   <EditorClient editId={params.id} />
       </div>

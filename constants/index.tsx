@@ -39,18 +39,18 @@ const featuredProjects: FeaturedProjects = [
     stack: ["Next.js", "Node.js", "Express.js", "Stripe", "Tailwind CSS", "Shadcn/UI"]
   },
   {
-    title: "Course Hub",
-    description: "A full-featured course marketplace built with Next.js and Express.js, offering secure payments, video delivery, and role-based access control.",
+    title: "Sudoku Arena",
+    description: "A competitive online platform for playing and solving Sudoku puzzles in real-time and earn money.",
     highlights: [
-      "Real-time collaborative document editing",
-      "Secure user authentication with Clerk",
-      "Dynamic content updates with Convex database",
+      "Real-time multiplayer gameplay",
+      "Interactive puzzle editor and solver",
+      "User-friendly interface with dark mode",
       "Responsive UI with Tailwind CSS and Shadcn/UI",
       "Rich text editing and formatting options"
     ],
-    github: "https://github.com/raghuaanand/course-marketplace",
-    live: "https://course-marketplace-one.vercel.app/",
-    stack: ["Next.js", "Node.js", "Express.js", "Stripe", "Tailwind CSS", "Shadcn/UI"]
+    github: "https://github.com/raghuaanand/sudoku-arena",
+    live: "https://suduko-arena.vercel.app/",
+    stack: ["Next.js", "Node.js", "Express.js", "Razorpay", "Socket.IO", "Auth.js"]
   },
   {
     title: "VirtuMeet",
@@ -96,7 +96,7 @@ const experiences = [
       "Built an automated payload validation pipeline integrated into CI; enforced pre-deploy checks and rollbacks, catching errors earlier and slashing production bugs by 72% month-over-month.",
       "Developed a rich text editor using Lexical for seamless multimedia content embedding",
     ],
-    technologies: ["React", "Node.js", "Next.js", "AWS", "TypeScript", "PostgreSQL"]
+    technologies: ["React", "Node.js", "Next.js", "AWS", "TypeScript", "PostgreSQL", "Paddle", ]
   }
 ];
 

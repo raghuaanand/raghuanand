@@ -22,9 +22,9 @@ export default function HeroSection() {
         <p className="text-xl font-roboto text-gray-600 mb-4 homepage-content">
           Full-Stack Software Engineer
         </p>
-        <p className="text-base font-roboto text-gray-500 mb-6 homepage-content">
+        {/* <p className="text-base font-roboto text-gray-500 mb-6 homepage-content">
           📍 India
-        </p>
+        </p> */}
         
         {/* Bio */}
         <p className="text-gray-700 max-w-5xl font-roboto homepage-content mb-6">
@@ -34,9 +34,10 @@ export default function HeroSection() {
 
         {/* Links */}
         <div className="flex flex-wrap gap-4 text-sm">
-          <a 
-            href="/resume.pdf" 
-            download
+          <a
+            href="https://drive.google.com/file/d/1quB_NdMtzwbHP3ALuFQj2AwvcRZt7Cb0/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-blue-600 hover:text-blue-700 underline underline-offset-2 font-roboto"
           >
             resume

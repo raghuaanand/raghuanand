@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://raghuanand.tech",
+    url: "https://raghuanand.me",
     title: "Raghu Anand | Full-Stack Software Engineer",
     description: "Portfolio showcasing expertise in modern web development and software engineering.",
     siteName: "Raghu Anand Portfolio",

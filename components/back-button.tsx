@@ -9,11 +9,18 @@ export default function BackButton() {
     <button
       aria-label="Go back"
       onClick={() => router.back()}
-      className="fixed top-4 left-4 z-50 p-2 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-300 shadow"
+      className={
+        // On small screens keep the button inline and unobtrusive; on md+ keep fixed floating button
+        "md:fixed md:top-4 md:left-4 md:z-50 md:p-2 md:rounded-full md:bg-gray-100 md:hover:bg-gray-200 md:border md:border-gray-300 md:shadow " +
+        // Small-screen appearance: small inline button with subtle background and margin so it doesn't overlap headings
+        "relative inline-flex items-center p-1.5 bg-transparent hover:bg-gray-50 rounded-md"
+      }
+      style={{ backdropFilter: "none" }}
     >
-      <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden>
         <path d="M15 19l-7-7 7-7" />
       </svg>
+      <span className="sr-only">Go back</span>
     </button>
   );
 }

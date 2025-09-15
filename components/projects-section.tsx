@@ -55,7 +55,7 @@ export default function ProjectsSection() {
         
         <div className="pt-4">
           <a 
-            href="https://github.com/raghuaanand"
+            href="https://github.com/raghuaanand?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-600 hover:text-blue-700 underline underline-offset-2 font-roboto"
