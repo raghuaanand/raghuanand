@@ -5,7 +5,10 @@ export default function Footer() {
     <footer className="pt-16 pb-8 text-center">
       <div className="space-y-2">
         <p className="text-sm font-roboto text-gray-500 homepage-content">
-          Last updated January 2025
+          All rights reserved. &copy; {new Date().getFullYear()} Raghu Anand.
+        </p>
+        <p className="text-sm font-roboto text-gray-500 homepage-content">
+          Built with Next.js, Tailwind CSS, and deployed on Vercel.
         </p>
         
       </div>

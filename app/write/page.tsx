@@ -106,4 +106,4 @@ export default function WritePage() {
       )}
     </div>
   );
-}
+}import Link from "next/link";

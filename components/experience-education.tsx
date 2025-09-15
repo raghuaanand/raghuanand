@@ -6,7 +6,34 @@ import ProjectsSection from "./projects-section";
 export default function ExperienceEducation() {
     return (
         <div className="space-y-16">
+            
+             {/* Technologies */}
+            <section>
+                <h2 className="text-2xl font-roboto font-bold text-gray-900 mb-8 homepage-section-title">Technologies</h2>
 
+                <div className="space-y-4">
+                    <div className="flex items-start gap-4">
+                        <p className="font-roboto font-semibold text-gray-900 min-w-[130px]">Frontend</p>
+                        <p className="font-roboto text-gray-600 homepage-content flex-1">
+                            React.js, Next.js, TypeScript, Tailwind CSS, JavaScript (ES6+)
+                        </p>
+                    </div>
+
+                    <div className="flex items-start gap-4">
+                        <p className="font-roboto font-semibold text-gray-900 min-w-[130px]">Backend</p>
+                        <p className="font-roboto text-gray-600 homepage-content flex-1">
+                            Node.js, Express.js, MongoDB, PostgreSQL, Serverless Backend
+                        </p>
+                    </div>
+
+                    <div className="flex items-start gap-4">
+                        <p className="font-roboto font-semibold text-gray-900 min-w-[130px]">Tools & DevOps</p>
+                        <p className="font-roboto text-gray-600 homepage-content flex-1">
+                            Git/GitHub, Docker, AWS, Vercel, CI/CD, WebRTC, Prisma, Redis, Linux
+                        </p>
+                    </div>
+                </div>
+            </section>
 
             {/* Work Experience */}
             <section>
@@ -104,34 +131,6 @@ export default function ExperienceEducation() {
                         {/* <p className="text-sm text-gray-500">
                                 Percentage: 98.08%
                         </p> */}
-                    </div>
-                </div>
-            </section>
-
-                        {/* Technologies */}
-            <section>
-                <h2 className="text-2xl font-roboto font-bold text-gray-900 mb-8 homepage-section-title">Technologies</h2>
-
-                <div className="space-y-4">
-                    <div>
-                        <p className="font-roboto font-medium text-gray-900 mb-2">Frontend</p>
-                        <p className="font-roboto text-gray-600 homepage-content">
-                            React.js • Next.js • TypeScript • Tailwind CSS • JavaScript (ES6+)
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="font-roboto font-medium text-gray-900 mb-2">Backend</p>
-                        <p className="font-roboto text-gray-600 homepage-content">
-                            Node.js • Express.js • MongoDB • PostgreSQL • Serverless Backend
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="font-roboto font-medium text-gray-900 mb-2">Tools & DevOps</p>
-                        <p className="font-roboto text-gray-600 homepage-content">
-                            Git/GitHub • Docker • AWS • Vercel • CI/CD • WebRTC • Prisma • Redis • Linux
-                        </p>
                     </div>
                 </div>
             </section>

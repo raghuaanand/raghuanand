@@ -52,7 +52,7 @@ export default async function BlogDetailPage({ params }: Props) {
   const isHtml = post.contentType === 'html';
 
   return (
-    <div className="min-h-screen bg-white mt-10">
+    <div className="min-h-screen bg-white md:mt-10 mt-2">
       {/* Medium-style layout */}
       <div className="medium-container py-12">
         {/* Title section with Medium-style spacing */}
