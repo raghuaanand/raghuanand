@@ -16,6 +16,29 @@ type Post = {
 export default function RecentBlogs() {
   const [posts, setPosts] = useState<Post[]>([]);
 
+  const snippet = (text?: string | null) => {
+    if (!text) return "";
+    const trimmed = text.trim();
+    if (trimmed.length === 0) return "";
+
+    // take up to first 25 words
+    const words = trimmed.split(/\s+/);
+    let out = words.slice(0, 25).join(" ");
+
+    // enforce 125 character limit
+    if (out.length > 125) {
+      out = out.slice(0, 125).replace(/\s+$/g, "");
+      return out + "…";
+    }
+
+    // if we trimmed by words and original is longer, append ellipsis
+    if (words.length > 25 || out.length < trimmed.length) {
+      return out + "…";
+    }
+
+    return out;
+  };
+
   useEffect(() => {
     let mounted = true;
     fetch("/api/posts")
@@ -48,7 +71,7 @@ export default function RecentBlogs() {
                   {p.title}
                 </h3>
                 {p.description || p.excerpt ? (
-                  <p className="text-gray-700 text-base leading-relaxed mb-3">{p.description ?? p.excerpt}</p>
+                  <p className="text-gray-700 text-base leading-relaxed mb-3">{snippet(p.description ?? p.excerpt)}</p>
                 ) : null}
                 <span className="inline-block text-sm font-medium text-gray-600 group-hover:text-gray-800 transition-colors">
                   Read more →
