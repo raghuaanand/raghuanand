@@ -60,6 +60,26 @@ export async function POST(req: Request) {
 
   const excerpt = toExcerpt(content, contentType);
 
+  const userId = (session.user as any).id as string;
+  
+  console.log("DEBUG: Session user ID:", userId);
+  console.log("DEBUG: Full session:", JSON.stringify(session, null, 2));
+  
+  // Verify that the user exists in the database
+  const userExists = await prisma.user.findUnique({ where: { id: userId } });
+  console.log("DEBUG: User exists in DB:", !!userExists);
+  
+  if (!userExists) {
+    // List all users for debugging
+    const allUsers = await prisma.user.findMany({ select: { id: true, email: true } });
+    console.log("DEBUG: All users in DB:", allUsers);
+    
+    return NextResponse.json(
+      { error: "User not found. Please sign in again." },
+      { status: 401 }
+    );
+  }
+
   const post = await prisma.post.create({
     data: {
       title,
@@ -70,7 +90,7 @@ export async function POST(req: Request) {
       excerpt,
       published: !!published,
       publishedAt: published ? new Date() : null,
-      authorId: (session.user as any).id as string,
+      authorId: userId,
     },
     select: { id: true, slug: true, published: true },
   });

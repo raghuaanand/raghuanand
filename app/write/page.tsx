@@ -75,17 +75,17 @@ export default function WritePage() {
   }
 
   return (
-    <div className="min-h-screen bg-stone-50 pt-20">
-      <div className="content-wide px-6 md:px-8 py-12">
+    <div className="min-h-screen bg-stone-50">
+      <div className="content-wide px-6 md:px-8 py-4">
         <header className="mb-12 pb-8 border-b border-stone-200 flex items-center justify-between">
           <div>
-            <h1 className="font-display text-4xl md:text-5xl font-light tracking-tight text-ink-900 mb-4">
+            <h1 className="font-display text-3xl md:text-4xl font-light tracking-tight text-ink-900 mb-4">
               Write
             </h1>
             <p className="text-md text-text-secondary">Manage your blog posts</p>
           </div>
           <button
-            className="px-6 py-3 bg-accent-rust text-stone-50 hover:bg-ink-900 transition-colors font-medium text-sm rounded-sm"
+            className="px-6 py-3 bg-accent-rust text-black transition-colors font-medium text-sm rounded-lg border-2 border-gray-400 hover:border-ink-700 "
             onClick={handleWriteNew}
           >
             New Article

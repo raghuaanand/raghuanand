@@ -83,9 +83,8 @@ function ToolbarButton({ onClick, isActive, disabled, children, title }: Toolbar
       onClick={onClick}
       disabled={disabled}
       title={title}
-      className={`p-2 rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed ${
-        isActive ? 'bg-blue-100 border-blue-400' : 'bg-white'
-      }`}
+      className={`p-2 rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed ${isActive ? 'bg-blue-100 border-blue-400' : 'bg-white'
+        }`}
     >
       {children}
     </button>
@@ -209,7 +208,7 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
       SlashCommands.configure({
         suggestion: {
           items: ({ query }: { query: string }) => {
-            return slashCommands.filter(item => 
+            return slashCommands.filter(item =>
               item.title.toLowerCase().includes(query.toLowerCase())
             ).slice(0, 10);
           },
@@ -239,11 +238,10 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
                 popup.style.top = props.clientRect().bottom + 'px';
 
                 document.body.appendChild(popup);
-                
+
                 const renderItems = () => {
-                  popup.innerHTML = props.items.map((item: any, index: number) => 
-                    `<div class="slash-item p-2 rounded hover:bg-gray-100 cursor-pointer ${
-                      index === component.selectedIndex ? 'bg-blue-50' : ''
+                  popup.innerHTML = props.items.map((item: any, index: number) =>
+                    `<div class="slash-item p-2 rounded hover:bg-gray-100 cursor-pointer ${index === component.selectedIndex ? 'bg-blue-50' : ''
                     }">
                       <div class="font-medium text-sm">${item.title}</div>
                       <div class="text-xs text-gray-500">${item.description}</div>
@@ -294,9 +292,8 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
                 }
 
                 const renderItems = () => {
-                  popup.innerHTML = props.items.map((item: any, index: number) => 
-                    `<div class="slash-item p-2 rounded hover:bg-gray-100 cursor-pointer ${
-                      index === component.selectedIndex ? 'bg-blue-50' : ''
+                  popup.innerHTML = props.items.map((item: any, index: number) =>
+                    `<div class="slash-item p-2 rounded hover:bg-gray-100 cursor-pointer ${index === component.selectedIndex ? 'bg-blue-50' : ''
                     }">
                       <div class="font-medium text-sm">${item.title}</div>
                       <div class="text-xs text-gray-500">${item.description}</div>
@@ -340,7 +337,7 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
     content: '',
     editorProps: {
       attributes: {
-        class: 'prose prose-neutral max-w-none focus:outline-none min-h-[400px] p-4 editor-content',
+        class: 'prose prose-compact max-w-none focus:outline-none min-h-[400px] p-4 editor-content',
       },
     },
   });
@@ -353,12 +350,12 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
   };
 
   const editorContent = editor?.getHTML() || '';
-  
+
   const isValid = useMemo(() => {
-    return title.trim().length >= 3 && 
-           editorContent.length > 0 && 
-           editorContent !== '<p></p>' && 
-           /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
+    return title.trim().length >= 3 &&
+      editorContent.length > 0 &&
+      editorContent !== '<p></p>' &&
+      /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
   }, [title, slug, editorContent]);
 
   const uploadImage = useCallback(async (file: File) => {
@@ -420,10 +417,10 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
 
       console.log('Submit called with publish:', publish);
       console.log('Session:', session);
-      console.log('Is valid:', title.trim().length >= 3 && 
-           editorContent.length > 0 && 
-           editorContent !== '<p></p>' && 
-           /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug));
+      console.log('Is valid:', title.trim().length >= 3 &&
+        editorContent.length > 0 &&
+        editorContent !== '<p></p>' &&
+        /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug));
 
       setSubmitting(publish ? "publish" : "save");
       setError(null);
@@ -432,7 +429,7 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
       try {
         const content = editor.getHTML();
         console.log('Content to submit:', content);
-        
+
         const payload = {
           title: title.trim(),
           description: description.trim() || null,
@@ -442,7 +439,7 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
           published: publish,
         };
         console.log('Payload:', payload);
-        
+
         let res: Response;
         if (editId) {
           res = await fetch(`/api/posts/${editId}`, {
@@ -475,7 +472,7 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
           return;
         }
 
-  const data = (await res.json()) as { id: string; slug: string }; 
+        const data = (await res.json()) as { id: string; slug: string };
         console.log('Success response:', data);
 
         const saved = { id: data.id, title: title.trim(), slug: data.slug, published: publish };
@@ -495,7 +492,7 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
         setSubmitting("idle");
       }
     },
-  [title, description, slug, editor, router, editorContent, session, editId, onSaved]
+    [title, description, slug, editor, router, editorContent, session, editId, onSaved]
   );
 
   // Load post if editId provided
