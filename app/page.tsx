@@ -1,21 +1,21 @@
 "use client";
 
 import HeroSection from "@/components/hero-section";
-import ProjectsSection from "@/components/projects-section";
 import ExperienceEducation from "@/components/experience-education";
 import Footer from "@/components/footer";
 import RecentBlogs from "@/components/recent-blogs";
-import Link from "next/link";
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen bg-white homepage-container">
-      {/* Main Content Container */}
-      <div className="md:max-w-5xl max-w-2xl mx-auto px-6 py-4 lg:py-4">
-
+    <div className="min-h-screen min-w-screen bg-background text-ink-900">
+      <div className="content-container py-8 md:py-12">
         <HeroSection />
-        <ExperienceEducation />
-        <RecentBlogs />
+        <div className="mt-16 md:mt-24">
+          <ExperienceEducation />
+        </div>
+        <div className="mt-16 md:mt-24">
+          <RecentBlogs />
+        </div>
         <Footer />
       </div>
     </div>

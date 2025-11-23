@@ -1,13 +1,34 @@
 import type { Metadata } from "next";
+import { Inter, Crimson_Pro, IBM_Plex_Mono } from 'next/font/google';
 import "./globals.css";
-
 
 import AuthProvider from "@/components/auth-provider";
 import BackButton from "@/components/back-button";
+import Navigation from "@/components/navigation";
 import { Analytics } from "@vercel/analytics/next"
 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+});
+
+const crimsonPro = Crimson_Pro({
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+  weight: ['300', '400', '500', '600'],
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  weight: ['400', '500', '600'],
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
-  title: "Raghu Anand | Full-Stack Software Engineer",
+  title: "Raghu Anand -  Software Engineer",
   description: "Full-Stack Software Engineer specializing in React, Node.js, and modern web technologies. Building scalable, user-centric applications with clean, maintainable code.",
   keywords: ["software engineer", "full-stack developer", "React", "Node.js", "JavaScript", "TypeScript", "web development", "portfolio"],
   authors: [{ name: "Raghu Anand" }],
@@ -38,8 +59,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="min-h-screen font-sans bg-white text-gray-900 antialiased">
+      <body className={`min-h-screen bg-background text-ink-900 antialiased ${inter.variable} ${crimsonPro.variable} ${ibmPlexMono.variable}`}>
         <AuthProvider>
+          <Navigation />
           <BackButton />
           {children}
           <Analytics />

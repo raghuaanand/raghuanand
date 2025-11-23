@@ -5,31 +5,30 @@ import ProjectsSection from "./projects-section";
 
 export default function ExperienceEducation() {
     return (
-        <div className="space-y-16">
-            
-             {/* Technologies */}
+        <div className="space-y-20 md:space-y-24">
+            {/* Technologies */}
             <section>
-                <h2 className="text-2xl font-roboto font-bold text-gray-900 mb-8 homepage-section-title">Technologies</h2>
+                <h2 className="font-display text-3xl text-ink-900 mb-8">
+                    Technologies
+                </h2>
 
-                <div className="space-y-4">
-                    <div className="flex items-start gap-4">
-                        <p className="font-roboto font-semibold text-gray-900 min-w-[130px]">Frontend</p>
-                        <p className="font-roboto text-gray-600 homepage-content flex-1">
+                <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+                    <div>
+                        <h3 className="text-base font-semibold text-ink-900 mb-3">Frontend</h3>
+                        <p className="text-sm md:text-base text-ink-600 leading-relaxed">
                             React.js, Next.js, TypeScript, Tailwind CSS, JavaScript (ES6+)
                         </p>
                     </div>
-
-                    <div className="flex items-start gap-4">
-                        <p className="font-roboto font-semibold text-gray-900 min-w-[130px]">Backend</p>
-                        <p className="font-roboto text-gray-600 homepage-content flex-1">
-                            Node.js, Express.js, MongoDB, PostgreSQL, Serverless Backend
+                    <div>
+                        <h3 className="text-base font-semibold text-ink-900 mb-3">Backend</h3>
+                        <p className="text-sm md:text-base text-ink-600 leading-relaxed">
+                            Node.js, Express.js, MongoDB, PostgreSQL, Serverless
                         </p>
                     </div>
-
-                    <div className="flex items-start gap-4">
-                        <p className="font-roboto font-semibold text-gray-900 min-w-[130px]">Tools & DevOps</p>
-                        <p className="font-roboto text-gray-600 homepage-content flex-1">
-                            Git/GitHub, Docker, AWS, Vercel, CI/CD, WebRTC, Prisma, Redis, Linux
+                    <div>
+                        <h3 className="text-base font-semibold text-ink-900 mb-3">DevOps & Tools</h3>
+                        <p className="text-sm md:text-base text-ink-600 leading-relaxed">
+                            Git, Docker, AWS, Vercel, CI/CD, Prisma, Redis, Linux
                         </p>
                     </div>
                 </div>
@@ -37,104 +36,56 @@ export default function ExperienceEducation() {
 
             {/* Work Experience */}
             <section>
-                <h2 className="text-2xl font-roboto font-bold text-gray-900 mb-8 homepage-section-title">Work Experience</h2>
+                <h2 className="font-display text-3xl text-ink-900 mb-8">
+                    Experience
+                </h2>
 
                 <div className="space-y-8">
                     {experiences.map((exp, index) => (
-                        <div key={index} className="space-y-2">
-                            <div className="flex items-start justify-between">
-                                <div>
-                                    <h3 className="text-lg font-roboto font-semibold text-gray-900">
-                                        {exp.title}
-                                    </h3>
-                                    <p className="text-blue-600 font-roboto font-medium">
-                                        {exp.company}
-                                    </p>
-                                </div>
-                                <p className="text-sm font-roboto text-gray-500 text-right homepage-content">
+                        <article key={index} className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
+                            <div className="w-32 shrink-0">
+                                <span className="font-mono text-sm text-ink-500">
                                     {exp.period}
-                                </p>
+                                </span>
                             </div>
 
-                            <div className="space-y-1">
-                                {exp.achievements.slice(0, 3).map((achievement, achIndex) => (
-                                    <p key={achIndex} className="text-gray-600 font-roboto homepage-content">
-                                        • {achievement}
-                                    </p>
-                                ))}
-                            </div>
-
-                            {exp.technologies && (
-                                <p className="text-sm font-roboto text-gray-500 homepage-content">
-                                    {exp.technologies.join(" • ")}
+                            <div>
+                                <h3 className="text-base md:text-lg font-medium text-ink-900 mb-2">
+                                    {exp.title} <span className="text-ink-500">at</span> {exp.company}
+                                </h3>
+                                <p className="text-sm md:text-base text-ink-600 leading-relaxed max-w-2xl">
+                                    {exp.achievements[0]}
                                 </p>
-                            )}
-                        </div>
+                            </div>
+                        </article>
                     ))}
                 </div>
             </section>
 
-            <section>
-                <ProjectsSection />
-            </section>
+            <ProjectsSection />
 
             {/* Education */}
             <section>
-                <h2 className="text-2xl font-roboto font-bold text-gray-900 mb-8 homepage-section-title">Education</h2>
+                <h2 className="font-display text-3xl text-ink-900 mb-8">
+                    Education
+                </h2>
 
-                <div className="space-y-6">
-                    {/* BTech */}
-                    <div className="space-y-1">
-                        <h3 className="text-lg font-roboto font-semibold text-gray-900">
-                            {education[0]?.degree || "Bachelor of Engineering in Computer Science"}
-                        </h3>
-                        <p className="text-blue-600 font-roboto font-medium">
-                            {education[0]?.institution || "Chandigarh University"}
-                        </p>
-                        <p className="text-sm font-roboto text-gray-500 homepage-content">
-                            {education[0]?.period || "2021 - 2025"}
-                        </p>
-                        {/* {education[0]?.gpa && (
-                            <p className="text-sm text-gray-500">
-                                GPA: {education[0].gpa}
+                <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+                    {education.map((edu, index) => (
+                        <div key={index}>
+                            <div className="font-mono text-sm text-ink-500 mb-2">
+                                {edu.period}
+                            </div>
+                            <h3 className="text-base md:text-lg font-medium text-ink-900 mb-1">
+                                {edu.institution}
+                            </h3>
+                            <p className="text-sm md:text-base text-ink-600">
+                                {edu.degree}
                             </p>
-                        )} */}
-                    </div>
-
-                    {/* 12th Grade */}
-                    <div className="space-y-1">
-                        <h3 className="text-lg font-roboto font-semibold text-gray-900">
-                            Higher Secondary (12th)
-                        </h3>
-                        <p className="text-blue-600 font-roboto font-medium">
-                            K C Mount Fort Public School
-                        </p>
-                        <p className="text-sm font-roboto text-gray-500 homepage-content">
-                            2018 - 2020 • Science Stream (PCM) • CBSE
-                        </p>
-                        {/* <p className="text-sm text-gray-500">
-                                Percentage: 70.60%
-                        </p> */}
-                    </div>
-
-                    {/* 10th Grade */}
-                    <div className="space-y-1">
-                        <h3 className="text-lg font-roboto font-semibold text-gray-900">
-                            Secondary School (10th)
-                        </h3>
-                        <p className="text-blue-600 font-roboto font-medium">
-                            Sri Ramakrishna Vidyashala (SRKVS)
-                        </p>
-                        <p className="text-sm font-roboto text-gray-500 homepage-content">
-                            2016 - 2018 • KSEEB
-                        </p>
-                        {/* <p className="text-sm text-gray-500">
-                                Percentage: 98.08%
-                        </p> */}
-                    </div>
+                        </div>
+                    ))}
                 </div>
             </section>
-
         </div>
     );
 }

@@ -16,29 +16,6 @@ type Post = {
 export default function RecentBlogs() {
   const [posts, setPosts] = useState<Post[]>([]);
 
-  const snippet = (text?: string | null) => {
-    if (!text) return "";
-    const trimmed = text.trim();
-    if (trimmed.length === 0) return "";
-
-    // take up to first 25 words
-    const words = trimmed.split(/\s+/);
-    let out = words.slice(0, 25).join(" ");
-
-    // enforce 125 character limit
-    if (out.length > 125) {
-      out = out.slice(0, 125).replace(/\s+$/g, "");
-      return out + "…";
-    }
-
-    // if we trimmed by words and original is longer, append ellipsis
-    if (words.length > 25 || out.length < trimmed.length) {
-      return out + "…";
-    }
-
-    return out;
-  };
-
   useEffect(() => {
     let mounted = true;
     fetch("/api/posts")
@@ -56,35 +33,41 @@ export default function RecentBlogs() {
     };
   }, []);
 
+  if (posts.length === 0) return null;
+
   return (
-    <section className="mt-12">
-      <h2 className="text-2xl font-bold font-roboto mb-6">Recent writings</h2>
+    <section>
+      <h2 className="font-display text-3xl text-ink-900 mb-8">
+        Recent blog posts
+      </h2>
 
       <div className="space-y-6">
-        {posts.length === 0 ? (
-          <p className="text-gray-600">No posts yet.</p>
-        ) : (
-          posts.map((p) => (
-            <article key={p.id} className="border-b-2 border-gray-200 pb-4">
-              <Link href={`/blogs/${p.slug}`} className="group block" prefetch>
-                <h3 className="text-xl font-roboto font-bold text-gray-900 group-hover:text-gray-700 mb-2 leading-tight">
+        {posts.map((p) => {
+          const date = p.publishedAt ?? p.createdAt;
+          const formatted = date ? new Date(date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          }) : "";
+
+          return (
+            <article key={p.id}>
+              <Link href={`/blogs/${p.slug}`} className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-0 group" prefetch>
+                <time className="font-mono text-sm text-ink-500 w-32 shrink-0">
+                  {formatted}
+                </time>
+                <h3 className="text-base font-thin md:text-lg text-blue-600 group-hover:text-blue-400 transition-colors">
                   {p.title}
                 </h3>
-                {p.description || p.excerpt ? (
-                  <p className="text-gray-700 text-base leading-relaxed mb-3">{snippet(p.description ?? p.excerpt)}</p>
-                ) : null}
-                <span className="inline-block text-sm font-medium text-gray-600 group-hover:text-gray-800 transition-colors">
-                  Read more →
-                </span>
               </Link>
             </article>
-          ))
-        )}
+          );
+        })}
       </div>
 
-      <div className="mt-6">
-        <Link href="/blogs" className="text-sm font-medium text-blue-600 hover:underline">
-          See more blogs →
+      <div className="mt-8">
+        <Link href="/blogs" className="text-sm text-ink-900 hover:text-ink-600 transition-colors underline underline-offset-4">
+          Full archive →
         </Link>
       </div>
     </section>

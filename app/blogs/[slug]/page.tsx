@@ -5,6 +5,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { notFound } from "next/navigation";
 import { stripHtml, removeFirstHeadingFromHtml, removeFirstHeadingFromMarkdown } from "@/lib/utils";
+import Image from "next/image";
+import BlogSidebar from "@/components/blog-sidebar";
 
 type Props = {
   params: { slug: string };
@@ -52,32 +54,58 @@ export default async function BlogDetailPage({ params }: Props) {
   const isHtml = post.contentType === 'html';
 
   return (
-    <div className="min-h-screen bg-white md:mt-10 mt-2">
-      {/* Medium-style layout */}
-      <div className="medium-container py-12">
-        {/* Title section with Medium-style spacing */}
-        <header className="mb-12">
-          <h1 className="medium-title">{post.title}</h1>
-          <div className="medium-meta">
-            <time dateTime={date.toISOString()}>{formatted}</time>
-          </div>
-        </header>
+    <div className="min-h-screen bg-white pt-12 pb-16">
+      <div className="content-container">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12 lg:gap-16">
 
-        {/* Content section */}
-        <article className="medium-content">
-          {isHtml ? (
-            <div 
-              dangerouslySetInnerHTML={{ __html: removeFirstHeadingFromHtml(post.content) }}
-              className="blog-content medium-content"
-            />
-          ) : (
-            <div className="blog-content medium-content">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {removeFirstHeadingFromMarkdown(post.content)}
-              </ReactMarkdown>
-            </div>
-          )}
-        </article>
+          {/* Main Content Column */}
+          <main className="min-w-0 max-w-[90ch]">
+            {/* Header Section */}
+            <header className="mb-10">
+              <h1 className="font-display text-3xl md:text-4xl font-semibold text-red-600 mb-6 leading-tight tracking-tight">
+                {post.title}
+              </h1>
+
+              {/* Author Mini-Profile (Mobile/Desktop consistent) */}
+              <div className="flex items-center gap-3">
+                <div className="relative w-10 h-10 rounded-full overflow-hidden border border-stone-200">
+                  <Image
+                    src="/profile.png"
+                    alt="Raghu Anand"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-col leading-none">
+                  <span className="font-medium text-ink-900 text-sm">Raghu Anand</span>
+                  <span className="text-ink-500 text-xs mt-1">
+                    <time dateTime={date.toISOString()}>{formatted}</time>
+                  </span>
+                </div>
+              </div>
+            </header>
+
+            {/* Blog Content */}
+            <article className="prose prose-compact max-w-none">
+              {isHtml ? (
+                <div
+                  dangerouslySetInnerHTML={{ __html: removeFirstHeadingFromHtml(post.content) }}
+                  className="blog-content"
+                />
+              ) : (
+                <div className="blog-content">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {removeFirstHeadingFromMarkdown(post.content)}
+                  </ReactMarkdown>
+                </div>
+              )}
+            </article>
+          </main>
+
+          {/* Sidebar Column */}
+          <BlogSidebar />
+
+        </div>
       </div>
     </div>
   );

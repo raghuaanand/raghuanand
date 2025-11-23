@@ -2,11 +2,10 @@ export const dynamic = "force-dynamic";
 
 import Link from "next/link";
 import prisma from "@/lib/prisma";
-import { stripHtml, truncateText } from "@/lib/utils";
 
 export const metadata = {
-  title: "Technical Writings",
-  description: "Published articles",
+  title: "Blogs | Raghu Anand",
+  description: "Technical articles and thoughts on software engineering, databases, and system design.",
 };
 
 export default async function BlogsPage() {
@@ -17,24 +16,42 @@ export default async function BlogsPage() {
       id: true,
       title: true,
       slug: true,
-      description: true,
-      excerpt: true,
       publishedAt: true,
       createdAt: true,
     },
   });
 
+  const postCount = posts.length;
+
   return (
-    <div className="min-h-screen min-w- bg-white mt-10">
-      <div className="medium-container py-12">
-        {/* <h1 className="medium-title mb-12">Blogs</h1> */}
+    <div className="min-h-screen bg-background text-ink-900">
+      <div className="content-container py-12">
+        <header className="mb-12">
+          <h1 className="font-display text-3xl md:text-5xl text-ink-900 mb-6">
+            Blogs ({postCount})
+          </h1>
+          <p className="text-base md:text-base text-ink-600 leading-relaxed max-w-2xl mb-4">
+            Every week, I document and articulate my thoughts and learnings on Software Engineering,
+            Database Internals, and System Design. Here are all blogs I wrote to date.
+          </p>
+          <p className="text-base text-ink-600">
+            If you find my writings helpful and interesting, consider subscribing to my{" "}
+            <a
+              href="/rss.xml"
+              className="text-ink-900 hover:text-ink-600 underline underline-offset-4 transition-colors"
+            >
+              RSS feed
+            </a>{" "}
+            in your favourite RSS Reader.
+          </p>
+        </header>
 
         {posts.length === 0 ? (
-          <div className="medium-content">
-            <p className="text-gray-600">No published posts yet.</p>
+          <div className="py-12">
+            <p className="text-ink-500">No published posts yet.</p>
           </div>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-1">
             {posts.map((post) => {
               const date = post.publishedAt ?? post.createdAt;
               const formatted = new Date(date).toLocaleDateString("en-US", {
@@ -44,24 +61,18 @@ export default async function BlogsPage() {
               });
 
               return (
-                <article key={post.id} className="border-b-2 border-gray-300 pb-8">
+                <article key={post.id}>
                   <Link
                     href={`/blogs/${post.slug}`}
-                    className="group block"
+                    className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-2 group"
                     prefetch={true}
                   >
-                    <h2 className="text-2xl font-roboto font-bold text-gray-900 group-hover:text-gray-700 mb-2 leading-tight">
+                    <time className="font-mono text-sm text-ink-500 w-32 shrink-0">
+                      {formatted} :
+                    </time>
+                    <h2 className="text-sm font-normal md:text-lg text-blue-600 group-hover:text-blue-400 transition-colors">
                       {post.title}
                     </h2>
-                    <div className="medium-meta mb-3">{formatted}</div>
-                    {post.description ? (
-                      <p className="text-gray-700 text-base leading-relaxed mb-4">
-                        {post.description}
-                      </p>
-                    ) : null}
-                    <span className="inline-block text-sm font-medium text-gray-600 group-hover:text-gray-800 transition-colors">
-                      Read more →
-                    </span>
                   </Link>
                 </article>
               );

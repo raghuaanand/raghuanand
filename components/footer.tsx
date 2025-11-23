@@ -2,15 +2,14 @@
 
 export default function Footer() {
   return (
-    <footer className="pt-16 pb-8 text-center">
-      <div className="space-y-2">
-        <p className="text-sm font-roboto text-gray-500 homepage-content">
-          All rights reserved. &copy; {new Date().getFullYear()} Raghu Anand.
+    <footer className="mt-32 pt-12 pb-8 border-t border-ink-200">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-ink-500">
+        <p>
+          &copy; {new Date().getFullYear()} Raghu Anand
         </p>
-        <p className="text-sm font-roboto text-gray-500 homepage-content">
-          Built with Next.js, Tailwind CSS, and deployed on Vercel.
+        <p>
+          Built with Next.js & Tailwind
         </p>
-        
       </div>
     </footer>
   );

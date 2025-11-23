@@ -19,87 +19,68 @@ const config: Config = {
         xl: "1280px",
       },
       fontFamily: {
-        serif: ["Crimson Text", "Georgia", "Cambria", "Times New Roman", "serif"], // Classic serif for headings
-        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"], // Clean sans-serif for body
-        roboto: ["Roboto Condensed", "-apple-system", "BlinkMacSystemFont", "sans-serif"], // Medium-style font
-        mono: ["Monaco", "Consolas", "Liberation Mono", "monospace"],
-        // Keep existing for backward compatibility
-        bodyFont: ["Inter", "system-ui", "-apple-system", "sans-serif"],
-        titleFont: ["Crimson Text", "Georgia", "Cambria", "Times New Roman", "serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
+        body: ["var(--font-body)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "Consolas", "monospace"],
+        sans: ["var(--font-body)", "system-ui", "sans-serif"],
+        serif: ["var(--font-display)", "Georgia", "serif"],
       },
       boxShadow: {
-        navbarBoxShadow: "0 10px 30px -10px rgba(2,12,27,0.7)",
-        card: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-        cardHover: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+        'elevation-low': '0 1px 2px rgba(0, 0, 0, 0.04)',
+        'elevation-mid': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+        'elevation-high': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
       },
       fontSize: {
-        // Classic typographic scale
         'xs': ['0.75rem', { lineHeight: '1rem' }],
         'sm': ['0.875rem', { lineHeight: '1.25rem' }],
-        'base': ['1rem', { lineHeight: '1.5rem' }], // 16px base
+        'base': ['1rem', { lineHeight: '1.5rem' }],
         'lg': ['1.125rem', { lineHeight: '1.75rem' }],
         'xl': ['1.25rem', { lineHeight: '1.75rem' }],
         '2xl': ['1.5rem', { lineHeight: '2rem' }],
-        '3xl': ['1.875rem', { lineHeight: '2.25rem' }], // H2: 30px
-        '4xl': ['2.25rem', { lineHeight: '2.5rem' }], // H1: 36px
-        '5xl': ['3rem', { lineHeight: '1' }],
-        '6xl': ['3.75rem', { lineHeight: '1' }],
+        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+        '4xl': ['2.25rem', { lineHeight: '2.5rem', letterSpacing: '-0.02em' }],
+        '5xl': ['3rem', { lineHeight: '1', letterSpacing: '-0.02em' }],
+        '6xl': ['3.75rem', { lineHeight: '1', letterSpacing: '-0.02em' }],
+        '7xl': ['4.5rem', { lineHeight: '1', letterSpacing: '-0.02em' }],
       },
       spacing: {
-        // Consistent spacing scale
         '18': '4.5rem',
+        '22': '5.5rem',
         '88': '22rem',
         '128': '32rem',
       },
-      animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'slide-in-left': 'slideInLeft 0.5s ease-out',
-        'slide-in-right': 'slideInRight 0.5s ease-out',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        slideInLeft: {
-          '0%': { opacity: '0', transform: 'translateX(-20px)' },
-          '100%': { opacity: '1', transform: 'translateX(0)' },
-        },
-        slideInRight: {
-          '0%': { opacity: '0', transform: 'translateX(20px)' },
-          '100%': { opacity: '1', transform: 'translateX(0)' },
-        },
-      },
       colors: {
-        // Classic navy blue and neutral palette
-        primary: "#1a365d", // Deep navy blue
-        secondary: "#2d3748", // Charcoal gray
-        accent: "#3182ce", // Professional blue accent
-        background: "#f7fafc", // Off-white background
-        surface: "#ffffff", // Pure white for cards/sections
-        text: {
-          primary: "#2d3748", // Dark charcoal for main text
-          secondary: "#4a5568", // Medium gray for secondary text
-          muted: "#718096", // Light gray for muted text
+        // Strict High Contrast - Arpit Bhayani Style
+        ink: {
+          900: '#000000', // Pure Black
+          800: '#1a1a1a',
+          700: '#333333',
+          600: '#4d4d4d',
+          500: '#666666',
+          400: '#808080',
+          300: '#999999',
+          200: '#e5e5e5',
+          100: '#f5f5f5',
+          50: '#ffffff', // Pure White
         },
-        border: "#e2e8f0", // Light border color
-        hover: "rgba(49, 130, 206, 0.1)", // Subtle blue hover
-        // Keep some existing colors for backward compatibility
-        bodyColor: "#f7fafc",
-        secondaryColor: "#ffffff",
-        textGreen: "#3182ce",
-        textLight: "#2d3748",
-        textDark: "#4a5568",
-        hoverColor: "rgba(49, 130, 206, 0.1)",
+        // Single Accent Color - Refined Rust (Keeping as per user constraint)
+        accent: {
+          DEFAULT: '#c2410c',
+          light: '#ea580c',
+          dark: '#9a3412',
+        },
+        // Semantic aliases
+        background: '#ffffff',
+        surface: '#ffffff',
+        border: '#e5e5e5',
+        text: {
+          primary: '#000000',
+          secondary: '#4d4d4d',
+          tertiary: '#808080',
+        },
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        // No gradients allowed
       },
     },
   },
