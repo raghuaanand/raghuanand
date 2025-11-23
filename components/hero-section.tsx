@@ -34,7 +34,7 @@ export default function HeroSection() {
               href="https://drive.google.com/file/d/1quB_NdMtzwbHP3ALuFQj2AwvcRZt7Cb0/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-400 transition-colors underline underline-offset-4"
+              className="text-black border hover:border-blue-400 border-gray-800 py-2 px-4 rounded-lg hover:text-blue-400 transition-colors hover:underline hover:underline-offset-4"
             >
               Resume
             </a>
@@ -49,7 +49,7 @@ export default function HeroSection() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-400 transition-colors underline underline-offset-4"
+                  className="text-black border hover:text-blue-400 hover:border-blue-400 border-gray-800 py-2 px-4 rounded-lg transition-colors  hover:underline hover:underline-offset-4"
                 >
                   {label}
                 </a>
@@ -60,7 +60,7 @@ export default function HeroSection() {
 
         {/* Right: Profile Image */}
         <div className="flex justify-center md:justify-end">
-          <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-ink-200">
+          <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-ink-200">
             <Image
               src="/profile.png"
               alt="Raghu Anand"

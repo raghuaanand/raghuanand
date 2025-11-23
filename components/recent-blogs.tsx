@@ -37,9 +37,15 @@ export default function RecentBlogs() {
 
   return (
     <section>
-      <h2 className="font-display text-3xl text-ink-900 mb-8">
-        Recent blog posts
-      </h2>
+      <div className="flex items-center justify-start gap-4 mb-2">
+        <h2 className="font-display text-2xl text-ink-900 mb-1">
+          Recent blog posts
+        </h2>
+        <Link href="/blogs" className="text-sm text-blue-600 hover:text-blue-400 hover:underline transition-colors  hover:underline-offset-4">
+          Full archive →
+        </Link>
+      </div>
+      <p className="text-sm text-ink-600 mb-4">Things I have written recently.</p>
 
       <div className="space-y-6">
         {posts.map((p) => {
@@ -65,11 +71,7 @@ export default function RecentBlogs() {
         })}
       </div>
 
-      <div className="mt-8">
-        <Link href="/blogs" className="text-sm text-ink-900 hover:text-ink-600 transition-colors underline underline-offset-4">
-          Full archive →
-        </Link>
-      </div>
+      
     </section>
   );
 }

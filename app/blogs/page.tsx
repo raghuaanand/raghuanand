@@ -26,7 +26,7 @@ export default async function BlogsPage() {
   return (
     <div className="min-h-screen bg-background text-ink-900">
       <div className="content-container py-12">
-        <header className="mb-12">
+        <header className="pb-8 mb-8 border-b-[2px] ">
           <h1 className="font-display text-3xl md:text-5xl text-ink-900 mb-6">
             Blogs ({postCount})
           </h1>
