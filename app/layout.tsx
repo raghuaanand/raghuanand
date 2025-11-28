@@ -40,11 +40,20 @@ export const metadata: Metadata = {
     title: "Raghu Anand | Full-Stack Software Engineer",
     description: "Portfolio showcasing expertise in modern web development and software engineering.",
     siteName: "Raghu Anand Portfolio",
+    images: [
+      {
+        url: "/profile.png",
+        width: 1200,
+        height: 630,
+        alt: "Raghu Anand - Software Engineer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Raghu Anand | Full-Stack Software Engineer",
     description: "Portfolio showcasing expertise in modern web development and software engineering.",
+    images: ["/profile.png"],
   },
   robots: {
     index: true,

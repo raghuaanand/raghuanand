@@ -20,9 +20,35 @@ export async function generateMetadata({ params }: Props) {
   if (!post) {
     return { title: "Post not found" };
   }
+
+  const description = post.description || (post.excerpt ? stripHtml(post.excerpt) : "Read this article by Raghu Anand");
+  const url = `https://raghuanand.me/blogs/${params.slug}`;
+
   return {
     title: post.title,
-    description: post.description || (post.excerpt ? stripHtml(post.excerpt) : undefined),
+    description,
+    openGraph: {
+      title: post.title,
+      description,
+      url,
+      siteName: "Raghu Anand",
+      locale: "en_US",
+      type: "article",
+      images: [
+        {
+          url: "/profile.png",
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description,
+      images: ["/profile.png"],
+    },
   };
 }
 
