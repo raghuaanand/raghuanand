@@ -15,7 +15,13 @@ type Props = {
 export async function generateMetadata({ params }: Props) {
   const post = await prisma.post.findUnique({
     where: { slug: params.slug },
-    select: { title: true, description: true, excerpt: true },
+    select: {
+      title: true,
+      description: true,
+      excerpt: true,
+      publishedAt: true,
+      createdAt: true,
+    },
   });
   if (!post) {
     return { title: "Post not found" };
@@ -23,6 +29,20 @@ export async function generateMetadata({ params }: Props) {
 
   const description = post.description || (post.excerpt ? stripHtml(post.excerpt) : "Read this article by Raghu Anand");
   const url = `https://raghuanand.me/blogs/${params.slug}`;
+
+  // Format date for OG image
+  const date = post.publishedAt ?? post.createdAt;
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
+  // Generate dynamic OG image URL
+  const ogImageUrl = new URL(`${process.env.NEXT_PUBLIC_BASE_URL || 'https://raghuanand.me'}/api/og`);
+  ogImageUrl.searchParams.set('title', post.title);
+  ogImageUrl.searchParams.set('author', 'Raghu Anand');
+  ogImageUrl.searchParams.set('date', formattedDate);
 
   return {
     title: post.title,
@@ -36,7 +56,7 @@ export async function generateMetadata({ params }: Props) {
       type: "article",
       images: [
         {
-          url: "/profile.png",
+          url: ogImageUrl.toString(),
           width: 1200,
           height: 630,
           alt: post.title,
@@ -47,7 +67,7 @@ export async function generateMetadata({ params }: Props) {
       card: "summary_large_image",
       title: post.title,
       description,
-      images: ["/profile.png"],
+      images: [ogImageUrl.toString()],
     },
   };
 }
