@@ -38,6 +38,9 @@ model Post {
   author      User     @relation(fields: [authorId], references: [id])
   images      Image[]  // Relation to uploaded images
 
+  relatedPosts Post[]  @relation("RelatedPosts")
+  relatedTo    Post[]  @relation("RelatedPosts")
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
