@@ -12,11 +12,12 @@ const createPostSchema = z.object({
   content: z.string().min(1),
   contentType: z.string().optional().default("html"),
   published: z.boolean().optional().default(false),
+  relatedPostIds: z.array(z.string()).optional(),
 });
 
 function toExcerpt(content: string, contentType: string = "html", maxLen = 180): string {
   let text = content;
-  
+
   if (contentType === "html") {
     // Strip HTML tags for excerpt
     text = content
@@ -34,7 +35,7 @@ function toExcerpt(content: string, contentType: string = "html", maxLen = 180):
       .replace(/\s+/g, " ")
       .trim();
   }
-  
+
   return text.length > maxLen ? text.slice(0, maxLen).trimEnd() + "…" : text;
 }
 
@@ -50,7 +51,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid payload", issues: parsed.error.flatten() }, { status: 400 });
   }
 
-  const { title, description, slug, content, contentType, published } = parsed.data;
+  const { title, description, slug, content, contentType, published, relatedPostIds } = parsed.data;
 
   // Enforce unique slug
   const existingSlug = await prisma.post.findUnique({ where: { slug } });
@@ -61,19 +62,19 @@ export async function POST(req: Request) {
   const excerpt = toExcerpt(content, contentType);
 
   const userId = (session.user as any).id as string;
-  
+
   console.log("DEBUG: Session user ID:", userId);
   console.log("DEBUG: Full session:", JSON.stringify(session, null, 2));
-  
+
   // Verify that the user exists in the database
   const userExists = await prisma.user.findUnique({ where: { id: userId } });
   console.log("DEBUG: User exists in DB:", !!userExists);
-  
+
   if (!userExists) {
     // List all users for debugging
     const allUsers = await prisma.user.findMany({ select: { id: true, email: true } });
     console.log("DEBUG: All users in DB:", allUsers);
-    
+
     return NextResponse.json(
       { error: "User not found. Please sign in again." },
       { status: 401 }
@@ -91,6 +92,9 @@ export async function POST(req: Request) {
       published: !!published,
       publishedAt: published ? new Date() : null,
       authorId: userId,
+      relatedPosts: relatedPostIds ? {
+        connect: relatedPostIds.map(id => ({ id }))
+      } : undefined,
     },
     select: { id: true, slug: true, published: true },
   });
