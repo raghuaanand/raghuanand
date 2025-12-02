@@ -19,7 +19,7 @@ export default function WritePage() {
       fetchBlogs();
     }
 
-  // no-op: editor is opened via onEdit handler
+    // no-op: editor is opened via onEdit handler
   }, [status, session]);
 
   async function fetchBlogs() {
@@ -76,18 +76,21 @@ export default function WritePage() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      <div className="content-wide px-6 md:px-8 py-4">
-        <header className="mb-12 pb-8 border-b border-stone-200 flex items-center justify-between">
+      <div className="max-w-5xl mx-auto px-6 md:px-8 py-12">
+        <header className="mb-12 flex items-end justify-between">
           <div>
-            <h1 className="font-display text-3xl md:text-4xl font-light tracking-tight text-ink-900 mb-4">
+            <h1 className="font-display text-4xl font-semibold tracking-tight text-ink-900 mb-2">
               Write
             </h1>
-            <p className="text-md text-text-secondary">Manage your blog posts</p>
+            <p className="text-ink-500">Manage your stories and ideas</p>
           </div>
           <button
-            className="px-6 py-3 bg-accent-rust text-black transition-colors font-medium text-sm rounded-lg border-2 border-gray-400 hover:border-ink-700 "
+            className="px-5 py-2.5 bg-ink-900 text-white hover:bg-ink-800 transition-all shadow-sm hover:shadow-md font-medium text-sm rounded-full flex items-center gap-2"
             onClick={handleWriteNew}
           >
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
             New Article
           </button>
         </header>
@@ -107,7 +110,7 @@ export default function WritePage() {
         )}
 
         {showEditor && (
-          <div className="mt-12 pt-12 border-t border-stone-200">
+          <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
             <NotionEditor
               editId={editId}
               onClose={() => {
