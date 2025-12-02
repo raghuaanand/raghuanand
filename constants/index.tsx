@@ -89,7 +89,19 @@ const experiences = [
   {
     title: "Software Engineer Intern",
     company: "CoPrimes",
-    period: "Jan 2025 - Present",
+    period: "Jan 2025 - June 2025",
+    achievements: [
+      "Identified redundant API requests; implemented request batching and deduplication, cutting API calls by 68% and overall latency by 40%.",
+      "Revamped client rendering and component architecture; implemented lazy loading and strategic prefetching, cutting content load time by 2.3s (45%) and improving user retention.",
+      "Built an automated payload validation pipeline integrated into CI; enforced pre-deploy checks and rollbacks, catching errors earlier and slashing production bugs by 72% month-over-month.",
+      "Developed a rich text editor using Lexical for seamless multimedia content embedding",
+    ],
+    technologies: ["React", "Node.js", "Next.js", "AWS", "TypeScript", "PostgreSQL", "Paddle", ]
+  },
+  {
+    title: "Software Engineer",
+    company: "CoPrimes",
+    period: "Jul 2025 - Present",
     achievements: [
       "Identified redundant API requests; implemented request batching and deduplication, cutting API calls by 68% and overall latency by 40%.",
       "Revamped client rendering and component architecture; implemented lazy loading and strategic prefetching, cutting content load time by 2.3s (45%) and improving user retention.",
