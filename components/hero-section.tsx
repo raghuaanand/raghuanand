@@ -8,14 +8,13 @@ export default function HeroSection() {
     <section className="py-16 md:py-4">
       <div className="grid grid-cols-1 md:grid-cols-[1fr,auto] gap-12 md:gap-16 items-start">
         {/* Left: Text Content */}
-        <div className="max-w-2xl">
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-ink-900 mb-4 leading-tight">
+        <div className="flex flex-col gap-6 md:gap-8 max-w-2xl">
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-ink-900 leading-[1.1]">
             Hey, I am Raghu
           </h1>
-
-          <h3 className="text-xl md:text-2xl text-red-600 font-light mb-8">
+          <p className="text-lg md:text-xl text-red-600 leading-relaxed">
             curious, tinkerer, and explorer
-          </h3>
+          </p>
 
           <div className="prose prose-lg max-w-none mb-8">
             <p className="text-base md:text-lg leading-relaxed text-ink-700 mb-4">

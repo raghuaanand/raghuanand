@@ -83,7 +83,9 @@ function ToolbarButton({ onClick, isActive, disabled, children, title }: Toolbar
       onClick={onClick}
       disabled={disabled}
       title={title}
-      className={`p-2 rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed ${isActive ? 'bg-blue-100 border-blue-400' : 'bg-white'
+      className={`p-2 rounded-md transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed ${isActive
+          ? 'bg-ink-900 text-white shadow-sm'
+          : 'text-ink-600 hover:bg-stone-100 hover:text-ink-900'
         }`}
     >
       {children}
@@ -97,12 +99,19 @@ type NotionEditorProps = {
   onSaved?: (post: { id: string; title: string; slug: string; published: boolean }) => void;
 };
 
+type SimplePost = {
+  id: string;
+  title: string;
+};
+
 export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorProps = {}) {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [slug, setSlug] = useState("");
+  const [relatedPostIds, setRelatedPostIds] = useState<string[]>([]);
+  const [availablePosts, setAvailablePosts] = useState<SimplePost[]>([]);
   const [submitting, setSubmitting] = useState<"idle" | "save" | "publish">("idle");
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
@@ -337,7 +346,7 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
     content: '',
     editorProps: {
       attributes: {
-        class: 'prose prose-compact max-w-none focus:outline-none min-h-[400px] p-4 editor-content',
+        class: 'prose prose-compact max-w-none focus:outline-none min-h-[500px] pb-32 editor-content',
       },
     },
   });
@@ -437,6 +446,7 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
           content,
           contentType: 'html',
           published: publish,
+          relatedPostIds,
         };
         console.log('Payload:', payload);
 
@@ -492,8 +502,24 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
         setSubmitting("idle");
       }
     },
-    [title, description, slug, editor, router, editorContent, session, editId, onSaved]
+    [title, description, slug, editor, router, editorContent, session, editId, onSaved, relatedPostIds]
   );
+
+  // Fetch available posts for relation
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch("/api/posts?all=1");
+        if (!res.ok) return;
+        const data = await res.json();
+        // Filter out current post if editing
+        const posts = data.posts.filter((p: any) => p.id !== editId).map((p: any) => ({ id: p.id, title: p.title }));
+        setAvailablePosts(posts);
+      } catch (e) {
+        console.error("Failed to fetch posts for relation", e);
+      }
+    })();
+  }, [editId]);
 
   // Load post if editId provided
   useEffect(() => {
@@ -511,6 +537,9 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
         setSlug(post.slug || "");
         if (editor && post.content) {
           editor.commands.setContent(post.content);
+        }
+        if (post.relatedPosts) {
+          setRelatedPostIds(post.relatedPosts.map((p: any) => p.id));
         }
       } catch (e) {
         console.error("Failed to load post for editing", e);
@@ -561,55 +590,116 @@ export default function NotionEditor({ editId, onClose, onSaved }: NotionEditorP
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-6xl mx-auto px-6 py-10">
-        <h1 className="text-3xl font-semibold mb-6">Write</h1>
+      <div className="max-w-5xl mx-auto px-6 py-12">
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="font-display text-3xl font-semibold text-ink-900">
+            {editId ? 'Edit Article' : 'New Article'}
+          </h1>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onClose}
+              className="px-4 py-2 text-sm font-medium text-ink-600 hover:text-ink-900 transition-colors"
+            >
+              Cancel
+            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => submit(false)}
+                disabled={submitting !== "idle"}
+                className="px-4 py-2 bg-white border border-stone-200 text-ink-900 hover:border-stone-300 hover:bg-stone-50 transition-all text-sm font-medium rounded-full disabled:opacity-50"
+              >
+                {submitting === "save" ? "Saving..." : "Save Draft"}
+              </button>
+              <button
+                onClick={() => submit(true)}
+                disabled={submitting !== "idle"}
+                className="px-4 py-2 bg-ink-900 text-white hover:bg-ink-800 transition-all shadow-sm hover:shadow-md text-sm font-medium rounded-full disabled:opacity-50"
+              >
+                {submitting === "publish" ? "Publishing..." : "Publish"}
+              </button>
+            </div>
+          </div>
+        </div>
 
-        <div className="space-y-4 mb-6">
-          <div>
-            <label className="block text-sm text-gray-700 mb-1" htmlFor="title">Title</label>
-            <input
-              id="title"
-              type="text"
-              value={title}
-              onChange={(e) => onTitleChange(e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-2xl font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Post title"
-            />
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 mb-8">
+          <div className="space-y-6">
+            <div>
+              <input
+                id="title"
+                type="text"
+                value={title}
+                onChange={(e) => onTitleChange(e.target.value)}
+                className="w-full bg-transparent text-4xl md:text-5xl font-display font-bold text-ink-900 placeholder:text-stone-300 focus:outline-none"
+                placeholder="Article Title"
+              />
+            </div>
+
+            <div>
+              <textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full bg-transparent text-lg text-ink-600 placeholder:text-stone-400 focus:outline-none resize-none"
+                placeholder="Write a short description..."
+                rows={2}
+                maxLength={300}
+              />
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm text-gray-700 mb-1" htmlFor="description">Description</label>
-            <textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
-              placeholder="Brief description for the blog listing page (optional)"
-              rows={3}
-              maxLength={300}
-            />
-            <p className="text-xs text-gray-500 mt-1">This will be shown in the blog listing page. Max 300 characters.</p>
-          </div>
+          <div className="space-y-6 lg:pt-4">
+            <div className="bg-stone-50 p-4 rounded-xl border border-stone-100">
+              <label className="block text-xs font-semibold text-ink-500 uppercase tracking-wider mb-2" htmlFor="slug">
+                URL Slug
+              </label>
+              <input
+                id="slug"
+                type="text"
+                value={slug}
+                onChange={(e) => {
+                  setSlugTouched(true);
+                  setSlug(e.target.value.toLowerCase());
+                }}
+                className="w-full bg-white rounded-md border border-stone-200 px-3 py-2 text-sm text-ink-600 font-mono focus:outline-none focus:ring-2 focus:ring-ink-900/10 focus:border-ink-900"
+                placeholder="article-slug"
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm text-gray-700 mb-1" htmlFor="slug">Slug</label>
-            <input
-              id="slug"
-              type="text"
-              value={slug}
-              onChange={(e) => {
-                setSlugTouched(true);
-                setSlug(e.target.value.toLowerCase());
-              }}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="auto-generated-from-title"
-            />
-            <p className="text-xs text-gray-500 mt-1">Lowercase letters, numbers, and hyphens only.</p>
+            <div className="bg-stone-50 p-4 rounded-xl border border-stone-100">
+              <label className="block text-xs font-semibold text-ink-500 uppercase tracking-wider mb-2">
+                Series
+              </label>
+              <div className="bg-white border border-stone-200 rounded-md max-h-48 overflow-y-auto">
+                {availablePosts.length === 0 ? (
+                  <p className="p-3 text-sm text-ink-400 italic">No other posts available.</p>
+                ) : (
+                  <div className="divide-y divide-stone-100">
+                    {availablePosts.map(post => (
+                      <label key={post.id} className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-stone-50 transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={relatedPostIds.includes(post.id)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setRelatedPostIds(prev => [...prev, post.id]);
+                            } else {
+                              setRelatedPostIds(prev => prev.filter(id => id !== post.id));
+                            }
+                          }}
+                          className="rounded border-stone-300 text-ink-900 focus:ring-ink-900"
+                        />
+                        <span className="text-sm text-ink-700 truncate">{post.title}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Sticky Toolbar */}
-        <div className="sticky top-0 z-10 border border-gray-300 rounded-t-md p-3 bg-gray-50 flex flex-wrap gap-1 shadow-sm">
+        <div className="sticky top-0 z-10 border-b border-stone-200 bg-white/80 backdrop-blur-md py-3 mb-8 flex flex-wrap gap-1">
           <ToolbarButton
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().undo()}

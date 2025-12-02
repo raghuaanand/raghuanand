@@ -10,7 +10,7 @@ export default function BackButton() {
       aria-label="Go back"
       onClick={() => router.back()}
       className={
-        "fixed top-6 left-6 z-50 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-ink-200 text-ink-500 hover:text-ink-900 hover:border-ink-900 transition-all duration-200"
+        "hidden md:block fixed top-6 left-6 z-50 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-ink-200 text-ink-500 hover:text-ink-900 hover:border-ink-900 transition-all duration-200"
       }
     >
       <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" aria-hidden>
