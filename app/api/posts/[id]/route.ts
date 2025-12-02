@@ -17,6 +17,7 @@ const updatePostSchema = z
       .optional(),
     content: z.string().min(1).optional(),
     published: z.boolean().optional(),
+    relatedPostIds: z.array(z.string()).optional(),
   })
   .refine((data) => Object.keys(data).length > 0, {
     message: "At least one field must be provided",
@@ -84,6 +85,14 @@ export async function PUT(req: Request, { params }: RouteContext) {
     }
   }
 
+  // Handle related posts
+  if (data.relatedPostIds) {
+    updateData.relatedPosts = {
+      set: data.relatedPostIds.map(id => ({ id })),
+    };
+    delete updateData.relatedPostIds;
+  }
+
   const updated = await prisma.post.update({
     where: { id: params.id },
     data: updateData,
@@ -135,6 +144,9 @@ export async function GET(req: Request, { params }: RouteContext) {
         published: true,
         publishedAt: true,
         createdAt: true,
+        relatedPosts: {
+          select: { id: true, title: true, slug: true }
+        }
       },
     });
 
