@@ -30,7 +30,7 @@ export default function HeroSection() {
           {/* Social Links */}
           <div className="flex flex-wrap gap-4 text-sm">
             <a
-              href="https://drive.google.com/file/d/1quB_NdMtzwbHP3ALuFQj2AwvcRZt7Cb0/view?usp=sharing"
+              href="https://drive.google.com/file/d/146g9wP71UPsTNXHDuthxHhwJTnub1RbN/view?usp=drive_link"
               target="_blank"
               rel="noopener noreferrer"
               className="text-black border hover:border-blue-400 border-gray-800 py-2 px-4 rounded-lg hover:text-blue-400 transition-colors hover:underline hover:underline-offset-4"
