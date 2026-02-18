@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "15f32b88-d932-49c5-8b7d-618bf852621a"
+      }
+    },
+    "android": {
+      "package": "raghuanand.portfolio"
+    }
+  }
+}
