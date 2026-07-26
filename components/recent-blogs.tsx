@@ -4,13 +4,11 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 type Post = {
-  id: string;
   title: string;
   slug: string;
-  description?: string | null;
-  excerpt?: string | null;
-  publishedAt?: string | null;
-  createdAt?: string | null;
+  description: string;
+  pubDate: string;
+  readingTime: string;
 };
 
 export default function RecentBlogs() {
@@ -18,8 +16,8 @@ export default function RecentBlogs() {
 
   useEffect(() => {
     let mounted = true;
-    fetch("/api/posts")
-      .then((res) => res.ok ? res.json() : Promise.resolve({ posts: [] }))
+    fetch("/api/medium-posts")
+      .then((res) => (res.ok ? res.json() : Promise.resolve({ posts: [] })))
       .then((data) => {
         if (!mounted) return;
         const list = Array.isArray(data.posts) ? data.posts.slice(0, 3) : [];
@@ -41,24 +39,32 @@ export default function RecentBlogs() {
         <h2 className="font-display text-2xl text-ink-900 mb-1">
           Recent blog posts
         </h2>
-        <Link href="/blogs" className="text-sm text-blue-600 hover:text-blue-400 hover:underline transition-colors  hover:underline-offset-4">
+        <Link
+          href="/blogs"
+          className="text-sm text-blue-600 hover:text-blue-400 hover:underline transition-colors hover:underline-offset-4"
+        >
           Full archive →
         </Link>
       </div>
-      <p className="text-sm text-ink-600 mb-4">Things I have written recently.</p>
+      <p className="text-sm text-ink-600 mb-4">
+        Things I have written recently.
+      </p>
 
       <div className="space-y-6">
         {posts.map((p) => {
-          const date = p.publishedAt ?? p.createdAt;
-          const formatted = date ? new Date(date).toLocaleDateString("en-US", {
+          const formatted = new Date(p.pubDate).toLocaleDateString("en-US", {
             year: "numeric",
             month: "short",
             day: "numeric",
-          }) : "";
+          });
 
           return (
-            <article key={p.id}>
-              <Link href={`/blogs/${p.slug}`} className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-0 group" prefetch>
+            <article key={p.slug}>
+              <Link
+                href={`/blogs/${p.slug}`}
+                className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-0 group"
+                prefetch
+              >
                 <time className="font-mono text-sm text-ink-500 w-32 shrink-0">
                   {formatted}
                 </time>
@@ -70,8 +76,6 @@ export default function RecentBlogs() {
           );
         })}
       </div>
-
-      
     </section>
   );
 }

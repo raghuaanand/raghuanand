@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Crimson_Pro, IBM_Plex_Mono } from 'next/font/google';
 import "./globals.css";
 
-import AuthProvider from "@/components/auth-provider";
 import BackButton from "@/components/back-button";
 import Navigation from "@/components/navigation";
 import { Analytics } from "@vercel/analytics/next"
@@ -69,12 +68,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`min-h-screen bg-background text-ink-900 antialiased ${inter.variable} ${crimsonPro.variable} ${ibmPlexMono.variable}`}>
-        <AuthProvider>
           <Navigation />
           <BackButton />
           {children}
           <Analytics />
-        </AuthProvider>
       </body>
     </html>
   );

@@ -1,49 +1,24 @@
-export const dynamic = "force-dynamic";
-
-import prisma from "@/lib/prisma";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { notFound } from "next/navigation";
-import { stripHtml, removeFirstHeadingFromHtml, removeFirstHeadingFromMarkdown } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { getMediumPostBySlug, getMediumPosts } from "@/lib/services/blog";
 import BlogSidebar from "@/components/blog-sidebar";
+import { stripHtml } from "@/lib/utils";
+
+export const revalidate = 3600;
 
 type Props = {
   params: { slug: string };
 };
 
 export async function generateMetadata({ params }: Props) {
-  const post = await prisma.post.findUnique({
-    where: { slug: params.slug },
-    select: {
-      title: true,
-      description: true,
-      excerpt: true,
-      publishedAt: true,
-      createdAt: true,
-    },
-  });
+  const post = await getMediumPostBySlug(params.slug);
   if (!post) {
     return { title: "Post not found" };
   }
 
-  const description = post.description || (post.excerpt ? stripHtml(post.excerpt) : "Read this article by Raghu Anand");
-  const url = `https://raghuanand.me/blogs/${params.slug}`;
-
-  // Format date for OG image
-  const date = post.publishedAt ?? post.createdAt;
-  const formattedDate = new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-
-  // Generate dynamic OG image URL
-  const ogImageUrl = new URL(`${process.env.NEXT_PUBLIC_BASE_URL || 'https://raghuanand.me'}/api/og`);
-  ogImageUrl.searchParams.set('title', post.title);
-  ogImageUrl.searchParams.set('author', 'Raghu Anand');
-  ogImageUrl.searchParams.set('date', formattedDate);
+  const description = post.description || stripHtml(post.content).substring(0, 160);
+  const url = `https://raghuanand.tech/blogs/${params.slug}`;
 
   return {
     title: post.title,
@@ -54,91 +29,92 @@ export async function generateMetadata({ params }: Props) {
       url,
       siteName: "Raghu Anand",
       locale: "en_US",
-      type: "article",
-      images: [
-        {
-          url: ogImageUrl.toString(),
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
+      type: "article" as const,
+      publishedTime: post.pubDate,
+      authors: [post.author],
+      tags: post.categories,
+      images: post.coverImage
+        ? [
+            {
+              url: post.coverImage,
+              width: 1200,
+              height: 630,
+              alt: post.title,
+            },
+          ]
+        : [
+            {
+              url: "/profile.png",
+              width: 1200,
+              height: 630,
+              alt: post.title,
+            },
+          ],
     },
     twitter: {
-      card: "summary_large_image",
+      card: "summary_large_image" as const,
       title: post.title,
       description,
-      images: [ogImageUrl.toString()],
+      images: post.coverImage ? [post.coverImage] : ["/profile.png"],
+    },
+    alternates: {
+      canonical: url,
     },
   };
 }
 
 export default async function BlogDetailPage({ params }: Props) {
-  const post = await prisma.post.findUnique({
-    where: { slug: params.slug },
-    select: {
-      id: true,
-      title: true,
-      content: true,
-      contentType: true,
-      published: true,
-      publishedAt: true,
-      createdAt: true,
-      relatedPosts: {
-        where: { published: true },
-        select: { id: true, title: true, slug: true, publishedAt: true, createdAt: true },
-      },
-    },
-  });
+  const post = await getMediumPostBySlug(params.slug);
 
-  if (!post || !post.published) {
+  if (!post) {
     notFound();
   }
 
-  // Fetch recommended posts (3 most recent, excluding current)
-  const recommendedPosts = await prisma.post.findMany({
-    where: {
-      published: true,
-      id: { not: post.id },
-    },
-    orderBy: { publishedAt: "desc" },
-    take: 3,
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      publishedAt: true,
-      createdAt: true,
-    },
-  });
+  const posts = await getMediumPosts();
+  const currentIndex = posts.findIndex((p) => p.slug === params.slug);
+  const recommendedPosts = posts
+    .filter((_, i) => i !== currentIndex)
+    .slice(0, 3);
 
-  const date = post.publishedAt ?? post.createdAt;
-  const formatted = new Date(date).toLocaleDateString("en-US", {
+  const formatted = new Date(post.pubDate).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
   });
 
-  const isHtml = post.contentType === 'html';
-
   return (
     <div className="min-h-screen bg-white pt-12 pb-16">
       <div className="content-container">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12 lg:gap-16">
-
           {/* Main Content Column */}
           <main className="min-w-0 max-w-[90ch]">
             {/* Header Section */}
             <header className="mb-12">
               <div className="flex items-center gap-2 text-sm text-ink-500 mb-6 font-medium">
-                <Link href="/blogs" className="hover:text-ink-900 transition-colors flex items-center gap-1">
-                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                <Link
+                  href="/blogs"
+                  className="hover:text-ink-900 transition-colors flex items-center gap-1"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                    />
                   </svg>
                   Back to Articles
                 </Link>
                 <span className="text-stone-300">•</span>
-                <time dateTime={date.toISOString()}>{formatted}</time>
+                <time dateTime={post.pubDate}>{formatted}</time>
+                <span className="text-stone-300">•</span>
+                <span className="text-ink-500">{post.readingTime}</span>
               </div>
 
               <h1 className="font-display text-4xl md:text-5xl font-bold text-ink-900 mb-8 leading-[1.1] tracking-tight">
@@ -156,14 +132,31 @@ export default async function BlogDetailPage({ params }: Props) {
                   />
                 </div>
                 <div className="flex flex-col leading-tight">
-                  <span className="font-semibold text-ink-900">Raghu Anand</span>
+                  <span className="font-semibold text-ink-900">
+                    {post.author}
+                  </span>
                   <span className="text-ink-500 text-sm">Software Engineer</span>
                 </div>
               </div>
+
+              {/* Categories */}
+              {post.categories.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-6">
+                  {post.categories.map((category) => (
+                    <span
+                      key={category}
+                      className="px-3 py-1 text-xs font-medium text-ink-600 bg-stone-100 rounded-full"
+                    >
+                      {category}
+                    </span>
+                  ))}
+                </div>
+              )}
             </header>
 
             {/* Blog Content */}
-            <article className="prose prose-lg prose-stone max-w-none 
+            <article
+              className="prose prose-lg prose-stone max-w-none 
               prose-headings:font-display prose-headings:font-semibold prose-headings:text-ink-900 
               prose-p:text-ink-700 prose-p:leading-relaxed 
               prose-a:text-ink-900 prose-a:decoration-stone-300 prose-a:underline-offset-4 hover:prose-a:decoration-ink-900 hover:prose-a:text-accent-rust prose-a:transition-all
@@ -171,77 +164,90 @@ export default async function BlogDetailPage({ params }: Props) {
               prose-code:text-ink-900 prose-code:bg-stone-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
               prose-pre:bg-stone-900 prose-pre:text-stone-50 prose-pre:rounded-xl prose-pre:shadow-sm
               prose-img:rounded-xl prose-img:shadow-md
-              prose-blockquote:border-l-4 prose-blockquote:border-accent-rust prose-blockquote:bg-stone-50 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-lg prose-blockquote:not-italic
-            ">
-              {isHtml ? (
-                <div
-                  dangerouslySetInnerHTML={{ __html: removeFirstHeadingFromHtml(post.content) }}
-                  className="blog-content"
-                />
-              ) : (
-                <div className="blog-content">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {removeFirstHeadingFromMarkdown(post.content)}
-                  </ReactMarkdown>
-                </div>
-              )}
+              prose-blockquote:border-l-4 prose-blockquote:border-accent-rust prose-blockquote:bg-stone-50 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-lg prose-blockquote:not-italic"
+            >
+              <div
+                dangerouslySetInnerHTML={{ __html: post.content }}
+                className="blog-content"
+              />
             </article>
 
-            {/* Related Posts (Series) */}
-            {(post as any).relatedPosts && (post as any).relatedPosts.length > 0 && (
-              <div className="mt-16 pt-10 border-t border-stone-200">
-                <div className="flex items-center gap-2 mb-6">
-                  <span className="p-1.5 bg-stone-100 rounded text-ink-500">
-                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                    </svg>
-                  </span>
-                  <h3 className="font-display text-xl font-semibold text-ink-900">More in this series</h3>
-                </div>
-
-                <div className="grid gap-3">
-                  {(post as any).relatedPosts.map((related: any) => (
-                    <Link
-                      key={related.id}
-                      href={`/blogs/${related.slug}`}
-                      className="group flex items-center justify-between p-4 bg-stone-50 rounded-xl border border-stone-100 hover:border-stone-300 hover:shadow-sm transition-all"
-                    >
-                      <span className="font-medium text-ink-700 group-hover:text-ink-900 transition-colors">
-                        {related.title}
-                      </span>
-                      <span className="text-stone-400 group-hover:text-accent-rust group-hover:translate-x-1 transition-all">
-                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
+            {/* Read on Medium Button */}
+            <div className="mt-12 pt-8 border-t border-stone-200">
+              <a
+                href={post.mediumUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-ink-900 text-white rounded-lg hover:bg-ink-800 transition-colors font-medium"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z" />
+                </svg>
+                Read original on Medium
+                <svg
+                  width="16"
+                  height="16"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  />
+                </svg>
+              </a>
+            </div>
 
             {/* Recommended Posts */}
             <div className="mt-20 pt-12 border-t border-stone-200">
               <div className="flex items-center justify-between mb-8">
-                <h3 className="font-display text-2xl font-semibold text-ink-900">Recommended for you</h3>
-                <Link href="/blogs" className="text-sm font-medium text-ink-500 hover:text-ink-900 transition-colors flex items-center gap-1">
+                <h3 className="font-display text-2xl font-semibold text-ink-900">
+                  Recommended for you
+                </h3>
+                <Link
+                  href="/blogs"
+                  className="text-sm font-medium text-ink-500 hover:text-ink-900 transition-colors flex items-center gap-1"
+                >
                   View all
-                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  <svg
+                    width="16"
+                    height="16"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
                   </svg>
                 </Link>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {recommendedPosts.map((rec) => (
-                  <Link key={rec.id} href={`/blogs/${rec.slug}`} className="group block h-full">
+                  <Link
+                    key={rec.slug}
+                    href={`/blogs/${rec.slug}`}
+                    className="group block h-full"
+                  >
                     <article className="flex flex-col h-full p-5 bg-white rounded-xl border border-stone-200 hover:border-stone-300 hover:shadow-md transition-all">
                       <h4 className="font-semibold text-lg text-ink-900 group-hover:text-accent-rust transition-colors mb-3 line-clamp-2 leading-tight">
                         {rec.title}
                       </h4>
                       <div className="mt-auto pt-4 flex items-center justify-between text-xs text-ink-400 font-medium">
                         <time>
-                          {new Date(rec.publishedAt ?? rec.createdAt).toLocaleDateString("en-US", {
+                          {new Date(rec.pubDate).toLocaleDateString("en-US", {
                             year: "numeric",
                             month: "short",
                             day: "numeric",
@@ -260,7 +266,6 @@ export default async function BlogDetailPage({ params }: Props) {
 
           {/* Sidebar Column */}
           <BlogSidebar />
-
         </div>
       </div>
     </div>

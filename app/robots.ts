@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: 'https://raghuanand.tech/sitemap.xml',
+    sitemap: 'https://raghuanand.me/sitemap.xml',
   }
 }

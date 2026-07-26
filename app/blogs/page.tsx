@@ -1,15 +1,17 @@
-export const dynamic = "force-dynamic";
-
 import Link from "next/link";
-import prisma from "@/lib/prisma";
+import { getMediumPosts } from "@/lib/services/blog";
+
+export const revalidate = 3600;
 
 export const metadata = {
   title: "Blogs | Raghu Anand",
-  description: "Technical articles and thoughts on software engineering, databases, and system design.",
+  description:
+    "Technical articles and thoughts on software engineering, databases, and system design.",
   openGraph: {
     title: "Blogs | Raghu Anand",
-    description: "Technical articles and thoughts on software engineering, databases, and system design.",
-    url: "https://raghuanand.me/blogs",
+    description:
+      "Technical articles and thoughts on software engineering, databases, and system design.",
+    url: "https://raghuanand.tech/blogs",
     siteName: "Raghu Anand",
     locale: "en_US",
     type: "website",
@@ -23,43 +25,37 @@ export const metadata = {
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary_large_image" as const,
     title: "Blogs | Raghu Anand",
-    description: "Technical articles and thoughts on software engineering, databases, and system design.",
+    description:
+      "Technical articles and thoughts on software engineering, databases, and system design.",
     images: ["/profile.png"],
   },
 };
 
 export default async function BlogsPage() {
-  const posts = await prisma.post.findMany({
-    where: { published: true },
-    orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      publishedAt: true,
-      createdAt: true,
-    },
-  });
-
+  const posts = await getMediumPosts();
   const postCount = posts.length;
 
   return (
     <div className="min-h-screen bg-background text-ink-900">
       <div className="content-container py-12">
-        <header className="pb-8 mb-8 border-b-[2px] ">
+        <header className="pb-8 mb-8 border-b-[2px]">
           <h1 className="font-display text-3xl md:text-5xl text-ink-900 mb-6">
             Blogs ({postCount})
           </h1>
           <p className="text-base md:text-base text-ink-600 leading-relaxed max-w-2xl mb-4">
-            Every week, I document and articulate my thoughts and learnings on Software Engineering,
-            Database Internals, and System Design. Here are all blogs I wrote to date.
+            Every week, I document and articulate my thoughts and learnings on
+            Software Engineering, Database Internals, and System Design. Here are
+            all blogs I wrote to date.
           </p>
           <p className="text-base text-ink-600">
-            If you find my writings helpful and interesting, consider subscribing to my{" "}
+            If you find my writings helpful and interesting, consider
+            subscribing to my{" "}
             <a
-              href="/rss.xml"
+              href="https://medium.com/feed/@raghuaanand"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-ink-900 hover:text-ink-600 underline underline-offset-4 transition-colors"
             >
               RSS feed
@@ -75,15 +71,17 @@ export default async function BlogsPage() {
         ) : (
           <div className="space-y-1">
             {posts.map((post) => {
-              const date = post.publishedAt ?? post.createdAt;
-              const formatted = new Date(date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-              });
+              const formatted = new Date(post.pubDate).toLocaleDateString(
+                "en-US",
+                {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                }
+              );
 
               return (
-                <article key={post.id}>
+                <article key={post.slug}>
                   <Link
                     href={`/blogs/${post.slug}`}
                     className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-2 group"
