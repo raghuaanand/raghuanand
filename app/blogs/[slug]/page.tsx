@@ -163,7 +163,7 @@ export default async function BlogDetailPage({ params }: Props) {
               prose-strong:text-ink-900 prose-strong:font-semibold
               prose-code:text-ink-900 prose-code:bg-stone-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
               prose-pre:bg-stone-900 prose-pre:text-stone-50 prose-pre:rounded-xl prose-pre:shadow-sm
-              prose-img:rounded-xl prose-img:shadow-md
+              prose-img:rounded-none prose-img:shadow-none
               prose-blockquote:border-l-4 prose-blockquote:border-accent-rust prose-blockquote:bg-stone-50 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-lg prose-blockquote:not-italic"
             >
               <div
